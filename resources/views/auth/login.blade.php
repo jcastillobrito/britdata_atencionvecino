@@ -7,8 +7,8 @@
         <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
             <div class="brand-logo pb-4 text-center">
                 <a href="html/index.html" class="logo-link">
-                    <img class="logo-light logo-img logo-img-lg" src="./images/logo.png" srcset="./images/logo2x.png 2x" alt="logo">
-                    <img class="logo-dark logo-img logo-img-lg" src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
+                    <img class="logo-light logo-img logo-img-lg" src="{{asset('/images/logo.png')}}" srcset="./images/logo2x.png 2x" alt="logo">
+                    <img class="logo-dark logo-img logo-img-lg" src="{{asset('/images/logo-dark.png')}}" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
                 </a>
             </div>
             <div class="card card-bordered">
@@ -58,6 +58,9 @@
                             <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
                         </div>
                     </form>
-                    <div class="form-note-s2 text-center pt-4"> New on our platform? <a href="{{ route('register') }}">Create an account</a>
-                    </div>
-                    <div
+            </div>
+        </div>
+    </div>
+</div>
+                    
+@endsection
