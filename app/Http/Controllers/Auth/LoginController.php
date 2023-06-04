@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\User;
 
 
 class LoginController extends Controller
@@ -49,7 +49,7 @@ class LoginController extends Controller
 
             
         if (Auth::attempt(['nr_rut' => $request->nr_rut,'password' => $request->password,'tp_activo'=>1])){
-            Log::info('Inicio de Sesión');
+            $user = User::where('nr_rut','=',$request->nr_rut)->update(['last_login' => now()]);
             return redirect()->route('home');
         }
  
