@@ -16,9 +16,8 @@
                                         <div class="nk-news-icon">
                                             <em class="icon ni ni-card-view"></em>
                                         </div>
-                                        <div class="nk-news-text">
-                                            <p>Do you know the latest update of 2022? <span> A overview of our is now available on YouTube</span></p>
-                                            <em class="icon ni ni-external"></em>
+                                        <div class="">
+                                            <p>{{$mensaje}}</p>
                                         </div>
                                     </a>
                                 </div>
@@ -32,8 +31,8 @@
                                                     <em class="icon ni ni-user-alt"></em>
                                                 </div>
                                                 <div class="user-info d-none d-md-block">
-                                                    <div class="user-status">Administrator</div>
-                                                    <div class="user-name dropdown-indicator">Abu Bin Ishityak</div>
+                                                    <div class="user-status">{{$nm_institucion}}</div>
+                                                    <div class="user-name dropdown-indicator">{{$nombre}}</div>
                                                 </div>
                                             </div>
                                         </a>

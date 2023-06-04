@@ -12,11 +12,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Crear roles
-        $superadminRole          = Role::create(['name' => 'super-admin']);
-        $adminRole          = Role::create(['name' => 'admin']);
-        $jefeUnidadRole     = Role::create(['name' => 'jefe unidad']);
-        $jefeDeptoRole      = Role::create(['name' => 'jefe depto']);
-        $funcionarioRole    = Role::create(['name' => 'funcionario']);
+        $superadminRole     = Role::create(['name' => 'super-admin' ,'color' => '#000000']);
+        $adminRole          = Role::create(['name' => 'ADMIN'       ,'color' => '#ADD8E6']);
+        $jefeUnidadRole     = Role::create(['name' => 'JEFE UNIDAD' ,'color' => '#FFC0CB']);
+        $jefeDeptoRole      = Role::create(['name' => 'JEFE DEPTO'  ,'color' => '#FFDAB9']);
+        $funcionarioRole    = Role::create(['name' => 'FUNCIONARIO' ,'color' => '#98FB98']);
 
         // Crear usuarios y asignar roles
 

@@ -22,7 +22,7 @@ Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Gestion de Usuarios
-Route::group(['middleware' => ['role:admin']], function () 
+Route::group(['middleware' => ['role:ADMIN']], function () 
 {
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.get');
     
