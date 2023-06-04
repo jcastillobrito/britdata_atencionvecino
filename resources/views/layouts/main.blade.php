@@ -26,7 +26,7 @@
             
             <!-- sidebar @e -->
             <!-- wrap @s -->
-            <div class="nk-wrap ">
+            <div class="nk-wrap" id="app">
                 <!-- main header @s -->
                 @include('layouts.partials.header')
                 <!-- main header @e -->

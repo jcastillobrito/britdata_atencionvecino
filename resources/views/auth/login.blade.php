@@ -25,10 +25,10 @@
                         @csrf
                         <div class="form-group">
                             <div class="form-label-group">
-                                <label class="form-label" for="email">Email o Username</label>
+                                <label class="form-label" for="email">Email</label>
                             </div>
                             <div class="form-control-wrap">
-                                <input type="text" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese su Emial o Username" required autocomplete="email" autofocus>
+                                <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese su Email" required autocomplete="email" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
