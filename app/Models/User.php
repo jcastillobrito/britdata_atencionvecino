@@ -24,7 +24,8 @@ class User extends Authenticatable
         'id_externo',
         'email',
         'celular',
-        'email'
+        'email',
+        'nr_institucion'
 
     ];
 

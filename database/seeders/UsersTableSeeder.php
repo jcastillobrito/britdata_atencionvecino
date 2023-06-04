@@ -12,12 +12,27 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Crear roles
+        $superadminRole          = Role::create(['name' => 'super-admin']);
         $adminRole          = Role::create(['name' => 'admin']);
         $jefeUnidadRole     = Role::create(['name' => 'jefe unidad']);
         $jefeDeptoRole      = Role::create(['name' => 'jefe depto']);
         $funcionarioRole    = Role::create(['name' => 'funcionario']);
 
         // Crear usuarios y asignar roles
+
+        User::create([
+            'nombres' => 'Super ',
+            'ap_paterno' => 'Admin',
+            'ap_materno' => 'Admin',
+            'nr_rut' => '11111111-1',
+            'id_externo' => '4578',
+            'email' => 'supeadmin@gmail.com',
+            'celular' => '+56945897483',
+            'email_verified_at' => now(),
+            'password' =>bcrypt('123456'),
+            'nr_institucion' => 1,
+        ])->assignRole($superadminRole);
+
         User::create([
             'nombres' => 'Juan Carlos',
             'ap_paterno' => 'Castillo',
@@ -28,6 +43,7 @@ class UsersTableSeeder extends Seeder
             'celular' => '+56945897482',
             'email_verified_at' => now(),
             'password' =>bcrypt('123456'),
+            'nr_institucion' => 1,
         ])->assignRole($adminRole);
 
         User::create([
@@ -40,6 +56,7 @@ class UsersTableSeeder extends Seeder
             'celular' => '222222222',
             'email_verified_at' => now(),
             'password' =>bcrypt('123456'),
+            'nr_institucion' => 1,
         ])->assignRole($jefeUnidadRole);
 
         User::create([
@@ -52,10 +69,11 @@ class UsersTableSeeder extends Seeder
             'celular' => '333333333',
             'email_verified_at' => now(),
             'password' =>bcrypt('123456'),
+            'nr_institucion' => 1,
         ])->assignRole($jefeDeptoRole);
 
         User::create([
-            'nombres' => 'Raul Esteban',
+            'nombres'   => 'Raul Esteban',
             'ap_paterno' => 'Fredes',
             'ap_materno' => 'Gutierrez',
             'nr_rut' => '17950289-5',
@@ -64,6 +82,8 @@ class UsersTableSeeder extends Seeder
             'celular' => '444444444',
             'email_verified_at' => now(),
             'password' => bcrypt('password'),
+            'nr_institucion' => 1,
+
         ])->assignRole($funcionarioRole);
     }
 }

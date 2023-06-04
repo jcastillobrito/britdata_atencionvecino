@@ -24,6 +24,11 @@ return new class extends Migration
             $table->string('celular')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('nr_institucion')->nullable()->unsigned();
+            //crea clave foranea con la tabla instituciones
+            $table->foreign('nr_institucion')->references('id')->on('institucion');
+
+            
             $table->tinyInteger('tp_activo')->default(1);
             $table->rememberToken();
             $table->timestamps();
