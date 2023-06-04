@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+
 
 class LoginController extends Controller
 {
@@ -36,5 +41,37 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);        
+
+            
+        if (Auth::attempt(['nr_rut' => $request->nr_rut,'password' => $request->password,'tp_activo'=>1])){
+            Log::info('Inicio de Sesión');
+            return redirect()->route('home');
+        }
+ 
+        return back()
+        ->withErrors(['nr_rut' => trans('auth.failed')])
+        ->withInput(request(['nr_rut']));
+ 
+    }
+
+    protected function validateLogin(Request $request)
+    {
+
+        $messages = [
+            'cl_rut' => 'El formato del RUT es incorrecto.',
+            'required' => 'El campo :attribute es obligatorio.',
+        ];
+
+
+        $this->validate($request,[
+            'nr_rut'   => 'required|string|cl_rut',
+            'password' => 'required|string'
+        ],$messages);
+ 
     }
 }

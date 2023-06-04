@@ -25,11 +25,11 @@
                         @csrf
                         <div class="form-group">
                             <div class="form-label-group">
-                                <label class="form-label" for="email">Email</label>
+                                <label class="form-label" for="rut">Rut</label>
                             </div>
                             <div class="form-control-wrap">
-                                <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese su Email" required autocomplete="email" autofocus>
-                                @error('email')
+                                <input value="18241152-3" type="text" class="form-control form-control-lg @error('nr_rut') is-invalid @enderror" id="nr_rut" name="nr_rut" value="{{ old('nr_rut') }}" placeholder="Ingrese su Rut" required autocomplete="nr_rut" autofocus>
+                                @error('nr_rut')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -44,7 +44,7 @@
                             <div class="form-control-wrap">
                                 <a href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
                                 </a>
-                                <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" id="password" name="password" placeholder="Ingrese su contraseña" required autocomplete="current-password">
+                                <input value="123456" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" id="password" name="password" placeholder="Ingrese su contraseña" required autocomplete="current-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
