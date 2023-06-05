@@ -25,6 +25,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('nr_institucion')->nullable()->unsigned();
+            $table->dateTime('last_login')->nullable();
             //crea clave foranea con la tabla instituciones
             $table->foreign('nr_institucion')->references('id')->on('institucion');
 

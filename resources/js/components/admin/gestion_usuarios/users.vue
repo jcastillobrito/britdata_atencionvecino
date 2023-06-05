@@ -7,16 +7,16 @@
                         <div class="card-tools">
                             <div class="form-inline flex-nowrap gx-3">
                                 <div class="form-wrap w-150px">
-                                    <select class="form-select js-select2" data-search="off" data-placeholder="Bulk Action">
-                                        <option value="">Bulk Action</option>
-                                        <option value="email">Send Email</option>
-                                        <option value="group">Change Group</option>
-                                        <option value="suspend">Suspend User</option>
-                                        <option value="delete">Delete User</option>
+                                    <select v-model="criterio" class="form-control " data-search="off" data-placeholder="Bulk Action">
+                                        <option value="nombres">Nombre</option>
+                                        <option value="ap_paterno">Apellido Paterno</option>
+                                        <option value="ap_materno">Apellido Materno</option>
+                                        <option value="email">Email</option>
+                                        <option value="nr_rut">Rut</option>
+                                        <option value="last_login">Último Inicio Sesión</option>
                                     </select>
                                 </div>
                                 <div class="btn-wrap">
-                                    <span class="d-none d-md-block"><button class="btn btn-dim btn-outline-light disabled">Apply</button></span>
                                     <span class="d-md-none"><button class="btn btn-dim btn-outline-light btn-icon disabled"><em class="icon ni ni-arrow-right"></em></button></span>
                                 </div>
                             </div><!-- .form-inline -->
@@ -35,72 +35,10 @@
                                                 <li class="toggle-close">
                                                     <a href="#" class="btn btn-icon btn-trigger toggle" data-target="cardTools"><em class="icon ni ni-arrow-left"></em></a>
                                                 </li><!-- li -->
-                                                <li>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-bs-toggle="dropdown">
-                                                            <div class="dot dot-primary"></div>
-                                                            <em class="icon ni ni-filter-alt"></em>
-                                                        </a>
-                                                        <div class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end">
-                                                            <div class="dropdown-head">
-                                                                <span class="sub-title dropdown-title">Filter Users</span>
-                                                                <div class="dropdown">
-                                                                    <a href="#" class="btn btn-sm btn-icon">
-                                                                        <em class="icon ni ni-more-h"></em>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="dropdown-body dropdown-body-rg">
-                                                                <div class="row gx-6 gy-3">
-                                                                    <div class="col-6">
-                                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="hasBalance">
-                                                                            <label class="custom-control-label" for="hasBalance"> Have Balance</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-6">
-                                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="hasKYC">
-                                                                            <label class="custom-control-label" for="hasKYC"> KYC Verified</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label class="overline-title overline-title-alt">Role</label>
-                                                                            <select class="form-select js-select2">
-                                                                                <option value="any">Any Role</option>
-                                                                                <option value="investor">Investor</option>
-                                                                                <option value="seller">Seller</option>
-                                                                                <option value="buyer">Buyer</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label class="overline-title overline-title-alt">Status</label>
-                                                                            <select class="form-select js-select2">
-                                                                                <option value="any">Any Status</option>
-                                                                                <option value="active">Active</option>
-                                                                                <option value="pending">Pending</option>
-                                                                                <option value="suspend">Suspend</option>
-                                                                                <option value="deleted">Deleted</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <div class="form-group">
-                                                                            <button type="button" class="btn btn-secondary">Filter</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="dropdown-foot between">
-                                                                <a class="clickable" href="#">Reset Filter</a>
-                                                                <a href="#">Save Filter</a>
-                                                            </div>
-                                                        </div><!-- .filter-wg -->
-                                                    </div><!-- .dropdown -->
-                                                </li><!-- li -->
+                                                <!-- li -->
+                                                <li >
+                                                    <a href="#" class="btn btn-white btn-outline-light"><em class="icon ni ni-download-cloud"></em><span>Export</span></a>
+                                                </li>
                                                 <li>
                                                     <div class="dropdown">
                                                         <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-bs-toggle="dropdown">
@@ -109,14 +47,14 @@
                                                         <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
                                                             <ul class="link-check">
                                                                 <li><span>Show</span></li>
-                                                                <li class="active"><a href="#">10</a></li>
-                                                                <li><a href="#">20</a></li>
-                                                                <li><a href="#">50</a></li>
+                                                                <li :class="{'active':nr_show ==10}" @click="setShow(10)"><a href="#">10</a></li>
+                                                                <li :class="{'active':nr_show ==20}" @click="setShow(20)"><a href="#">20</a></li>
+                                                                <li :class="{'active':nr_show ==50}" @click="setShow(50)"><a href="#">50</a></li>
                                                             </ul>
                                                             <ul class="link-check">
                                                                 <li><span>Order</span></li>
-                                                                <li class="active"><a href="#">DESC</a></li>
-                                                                <li><a href="#">ASC</a></li>
+                                                                <li :class="{'active':orderBy == 'DESC'}" @click="setOrder('DESC')"><a href="#">DESC</a></li>
+                                                                <li :class="{'active':orderBy == 'ASC'}" @click="setOrder('ASC')"><a href="#">ASC</a></li>
                                                             </ul>
                                                         </div>
                                                     </div><!-- .dropdown -->
@@ -132,7 +70,7 @@
                         <div class="card-body">
                             <div class="search-content">
                                 <a href="#" class="search-back btn btn-icon toggle-search" data-target="search"><em class="icon ni ni-arrow-left"></em></a>
-                                <input type="text" class="form-control border-transparent form-focus-none" placeholder="Search by user or email">
+                                <input @keyup.enter="getUsers()" v-model="busqueda" type="text" class="form-control border-transparent form-focus-none" placeholder="Search by user or email">
                                 <button class="search-submit btn btn-icon"><em class="icon ni ni-search"></em></button>
                             </div>
                         </div>
@@ -149,10 +87,10 @@
                             </div>
                             <div class="nk-tb-col"><span class="sub-text">User</span></div>
                             <div class="nk-tb-col tb-col-mb"><span class="sub-text">Rut</span></div>
-                            <div class="nk-tb-col tb-col-md"><span class="sub-text">telefono</span></div>
-                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Verified</span></div>
-                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Last Login</span></div>
-                            <div class="nk-tb-col tb-col-md"><span class="sub-text">Status</span></div>
+                            <div class="nk-tb-col tb-col-md"><span class="sub-text">Telefono</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Rol</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Último Inicio de Sesión</span></div>
+                            <div class="nk-tb-col tb-col-md"><span class="sub-text">Estado</span></div>
                             <div class="nk-tb-col tb-col-md"><span class="sub-text">Opciones</span></div>
                             
                         </div><!-- .nk-tb-item -->
@@ -184,12 +122,11 @@
                             </div>
                             <div class="nk-tb-col tb-col-lg">
                                 <ul class="list-status">
-                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span></li>
-                                    <li><em class="icon ni ni-alert-circle"></em> <span>KYC</span></li>
+                                    <li> <span>{{ user.roles[0].name }}</span></li>
                                 </ul>
                             </div>
                             <div class="nk-tb-col tb-col-lg">
-                                <span>10 Feb 2020</span>
+                                <span> {{ user.last_login }}</span>
                             </div>
                             <div class="nk-tb-col tb-col-md">
                                 <span v-if="user.tp_activo == 1" class="tb-status text-success">Activo</span>
@@ -203,8 +140,7 @@
                                             <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
-                                                    <li><a href="#"><em class="icon ni ni-focus"></em><span>Quick View</span></a></li>
-                                                    <li><a href="#"><em class="icon ni ni-eye"></em><span>View Details</span></a></li>
+                                                    <li @click="showModal(1,user)"><a href="#"><em class="icon ni ni-eye"></em><span>Ver Detalles</span></a></li>
                                                     <li><a href="#"><em class="icon ni ni-repeat"></em><span>Transaction</span></a></li>
                                                     <li><a href="#"><em class="icon ni ni-activity-round"></em><span>Activities</span></a></li>
                                                     <li class="divider"></li>
@@ -226,68 +162,58 @@
                     <div class="nk-block-between-md g-3">
                         <div class="g">
                             <ul class="pagination justify-content-center justify-content-md-start">
-                                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><span class="page-link"><em class="icon ni ni-more-h"></em></span></li>
-                                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                                </li>
+                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
+                                </li>
                             </ul><!-- .pagination -->
                         </div>
-                        <div class="g">
-                            <div class="pagination-goto d-flex justify-content-center justify-content-md-start gx-3">
-                                <div>Page</div>
-                                <div>
-                                    <select class="form-select js-select2" data-search="on" data-dropdown="xs center">
-                                        <option value="page-1">1</option>
-                                        <option value="page-2">2</option>
-                                        <option value="page-4">4</option>
-                                        <option value="page-5">5</option>
-                                        <option value="page-6">6</option>
-                                        <option value="page-7">7</option>
-                                        <option value="page-8">8</option>
-                                        <option value="page-9">9</option>
-                                        <option value="page-10">10</option>
-                                        <option value="page-11">11</option>
-                                        <option value="page-12">12</option>
-                                        <option value="page-13">13</option>
-                                        <option value="page-14">14</option>
-                                        <option value="page-15">15</option>
-                                        <option value="page-16">16</option>
-                                        <option value="page-17">17</option>
-                                        <option value="page-18">18</option>
-                                        <option value="page-19">19</option>
-                                        <option value="page-20">20</option>
-                                    </select>
-                                </div>
-                                <div>OF 102</div>
-                            </div>
-                        </div><!-- .pagination-goto -->
+                       
                     </div><!-- .nk-block-between -->
                 </div><!-- .card-inner -->
             </div><!-- .card-inner-group -->
         </div><!-- .card -->
     </div><!-- .nk-block -->
+
+    <!-- Modal Trigger Code -->
+    <!-- Detalle Usuario-->
+    <user_detalle  :user="tmp_user"></user_detalle>
+    
+    
 </template>
 
 <script>
 import axios from 'axios';
+import user_detalle from './user_detalle.vue';
 
 export default {
     data() {
         return {
-            users       : [],
-            pagination  : {
-                    'total' : 0,
-                    'current_page' : 0,
-                    'per_page' : 0,
-                    'last_page' : 0,
-                    'from' : 0,
-                    'to' : 0,
-                },
+            tmp_user        : [],
+            tp_modal        : 0,
+            criterio        : 'nombres',
+            busqueda        : '',
+            users           : [],
+            nr_show         : 10, // cantidad de elementos a mostrar en paginate
+            orderBy         : 'ASC',
+            pagination      : {
+                                'total' : 0,
+                                'current_page' : 0,
+                                'per_page' : 0,
+                                'last_page' : 0,
+                                'from' : 0,
+                                'to' : 0,
+                            },
             offset                     : 3,
         }
+    },
+    components: {
+        user_detalle
     },
     computed:{
 
@@ -321,17 +247,27 @@ export default {
             }
 },
     methods: {
-        cambiarPagina(page,buscar,criterio)
+        setOrder(order)
         {
-                let me = this;
-                //Actualiza la página actual
-                me.pagination.current_page = page;
-                //Envia la petición para visualizar la data de esa página
-                me.getUsers(page);
-            },
-        getUsers(page=1) {
             let me = this;
-            let ruta = '/users?page=' + page;
+            me.orderBy = order;
+            me.getUsers()
+        },
+        setShow(cant)
+        {
+            let me = this;
+            me.nr_show = cant
+            me.getUsers()
+        },
+        cambiarPagina(page)
+        {
+            let me = this;
+            me.pagination.current_page = page;
+            me.getUsers(page,cant);
+        },
+        getUsers() {
+            let me = this;
+            let ruta = '/users?page=' + me.pagination.current_page+'&cant='+me.nr_show+'&orderBy='+me.orderBy+'&criterio='+me.criterio+'&busqueda='+me.busqueda;
 
             axios.get(ruta)
                 .then(response => 
@@ -344,11 +280,23 @@ export default {
                     console.log(error)
                 })
             
+        },
+        showModal(tp_modal = 1,usuario)
+        {
+            let me = this;
+
+            me.tmp_user = usuario;
+            me.tp_modal = tp_modal;
+
+            if(tp_modal == 1)
+                $("#modalUser").modal('show');
+            
         }
     },
     mounted(){
 
         this.getUsers();
+       
     }
 }
 </script>

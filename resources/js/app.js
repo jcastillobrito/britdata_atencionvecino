@@ -23,6 +23,9 @@ app.component('example-component', ExampleComponent);
 import users from './components/admin/gestion_usuarios/users.vue';
 app.component('users', users);
 
+import user_detalle from './components/admin/gestion_usuarios/user_detalle.vue';
+app.component('user_detalle', user_detalle);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

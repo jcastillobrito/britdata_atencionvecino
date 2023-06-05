@@ -25,15 +25,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth()->user();
-        $nombre = $user->nombres.' '.$user->ap_paterno;
-        $institucion = $user->nr_institucion;
+        $user           = Auth()->user();
+        $nombre         = $user->nombres.' '.$user->ap_paterno;
+        $institucion    = $user->nr_institucion;
 
-        $insitucion = Institucion::where('id','=',$institucion)->first();
+        $insitucion     = Institucion::where('id','=',$institucion)->first();
         $nm_institucion = $insitucion->nm_institucion;
+
+        $role           = $user->getRoleNames()->first();
 
         $mensaje = "SISTEMA EN DESARROLLO";
 
-        return view('home')->with('nombre',$nombre)->with('nm_institucion',$nm_institucion)->with('mensaje',$mensaje);
+        return view('home')
+                ->with('nombre',$nombre)
+                ->with('nm_institucion',$nm_institucion)
+                ->with('role',$role)
+                ->with('mensaje',$mensaje);
     }
 }

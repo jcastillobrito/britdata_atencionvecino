@@ -32,7 +32,7 @@
                                                 </div>
                                                 <div class="user-info d-none d-md-block">
                                                     <div class="user-status">{{$nm_institucion}}</div>
-                                                    <div class="user-name dropdown-indicator">{{$nombre}}</div>
+                                                    <div class="user-name dropdown-indicator">{{$nombre.' - '.$role}}</div>
                                                 </div>
                                             </div>
                                         </a>
