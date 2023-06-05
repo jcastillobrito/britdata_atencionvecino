@@ -1,6 +1,6 @@
 <template>
 
-    <div class="modal fade" tabindex="-1" id="modalUser">
+    <div class="modal fade" tabindex="-1" id="modalUser" >
         <div class="modal-dialog modal-dialog-top modal-xl" role="document">
             <div class="modal-content">
                 <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -20,7 +20,7 @@
                                                                 <img src="images/avatar/b-sm.jpg" alt="">
                                                             </div>
                                                             <div class="user-info">
-                                                                <div class="badge bg-light rounded-pill ucap">{{ user.roles[0].name }}</div>
+                                                                <div v-if="user.roles" class="badge bg-light rounded-pill ucap">{{ user.roles[0].name }}</div>
                                                                 <h5>{{ user.nombres }}</h5>
                                                                 <span class="sub-text">{{ user.email }}</span>
                                                             </div>
