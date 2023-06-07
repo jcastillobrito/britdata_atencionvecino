@@ -11,25 +11,28 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Crear roles
-        $superadminRole     = Role::create(['name' => 'super-admin', 'color' => '#000000']);
-        $adminRole          = Role::create(['name' => 'ADMIN', 'color' => '#ADD8E6']);
-        $jefeUnidadRole     = Role::create(['name' => 'JEFE UNIDAD', 'color' => '#FFC0CB']);
-        $jefeDeptoRole      = Role::create(['name' => 'JEFE DEPTO', 'color' => '#FFDAB9']);
-        $funcionarioRole    = Role::create(['name' => 'FUNCIONARIO', 'color' => '#98FB98']);
+        $superadminRole     = Role::create(['name'  => 'SUPER-ADMIN',    'color' => '#374785']);
+        $adminRole          = Role::create(['name'  => 'ADMIN',          'color' => '#60A561']);
+        $jefeUnidadRole     = Role::create(['name'  => 'JEFE UNIDAD',    'color' => '#B5536C']);
+        $jefeDeptoRole      = Role::create(['name'  => 'JEFE DEPTO',     'color' => '#E9A34B']);
+        $seccionRol         = Role::create(['name'  => 'JEFE SECCION',   'color' => '#8C6F70']);
+        $funcionarioRole    = Role::create(['name'  => 'COLABORADOR',    'color' => '#4D87A0']);
+        $concejalesRole     = Role::create(['name'   => 'CONCEJAL',     'color' => '#C3A7D0']);
+
 
         // Crear usuarios y asignar roles
 
         User::create([
-            'nombres' => 'Super ',
-            'ap_paterno' => 'Admin',
-            'ap_materno' => 'Admin',
-            'nr_rut' => '11111111-1',
-            'id_externo' => '4578',
-            'email' => 'supeadmin@gmail.com',
-            'celular' => '+56945897483',
+            'nombres'           => 'Super ',
+            'ap_paterno'        => 'Admin',
+            'ap_materno'        => 'Admin',
+            'nr_rut'            => '11111111-1',
+            'id_externo'        => '4578',
+            'email'             => 'supeadmin@gmail.com',
+            'celular'           => '+56945897483',
             'email_verified_at' => now(),
-            'password' => bcrypt('123456'),
-            'nr_institucion' => 1,
+            'password'          => bcrypt('123456'),
+            'nr_institucion'    => 1,
         ])->assignRole($superadminRole);
 
         User::create([
