@@ -29,6 +29,10 @@ return new class extends Migration
             //crea clave foranea con la tabla instituciones
             $table->foreign('nr_institucion')->references('id')->on('institucion');
 
+            //Infraestructura municipal
+            $table->integer('nr_unidad')->nullable()->unsigned();
+            $table->integer('nr_depto')->nullable()->unsigned();
+            $table->integer('nr_seccion')->nullable()->unsigned();
             
             $table->tinyInteger('tp_activo')->default(1);
             $table->rememberToken();
