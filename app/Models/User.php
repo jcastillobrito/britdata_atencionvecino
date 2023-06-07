@@ -27,6 +27,9 @@ class User extends Authenticatable
         'email',
         'nr_institucion',
         'last_login',
+        'nr_unidad',
+        'nr_depto',
+        'nr_seccion',
     ];
 
     /**
