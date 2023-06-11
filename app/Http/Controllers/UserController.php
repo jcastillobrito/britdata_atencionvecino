@@ -29,11 +29,15 @@ class UserController extends Controller
                             'tp_activo',
                             'email',
                             'nr_institucion',
+                            'nr_depto',
+                            'nr_unidad',
                             'id')
                         ->selectRaw('CONCAT(SUBSTRING(nombres, 1, 1),SUBSTRING(ap_paterno, 1, 1)) as letters')
                         ->selectRaw('DATE_FORMAT(last_login,"%d-%m-%Y %H:%i") as last_login')
-                        ->where('nr_institucion','=',$nr_institucion)->with('roles')
-                        ->orderBy($criterio,$orderBy);
+                        ->with('Unidad')
+                        ->with('Depto')
+                        ->where('nr_institucion','=',$nr_institucion)->with('roles');
+                        //->orderBy($criterio,$orderBy);
 
         if($busqueda != '')
             $users = $users->where($criterio,'like','%'.$busqueda.'%');

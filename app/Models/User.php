@@ -56,5 +56,15 @@ class User extends Authenticatable
         return $this->belongsTo(Institucion::class,'nr_institucion','id');
     }
 
+    public function Unidad()
+    {
+        return $this->belongsTo(Unidad::class,'nr_unidad','id');
+    }
+
+    public function Depto()
+    {
+        return $this->belongsTo(Depto::class,'nr_depto','id');
+    }
+
    
 }

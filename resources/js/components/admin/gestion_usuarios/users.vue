@@ -80,13 +80,12 @@
                     <div class="nk-tb-list nk-tb-ulist">
                         <div class="nk-tb-item nk-tb-head">
                             <div class="nk-tb-col nk-tb-col-check">
-                                <div class="custom-control custom-control-sm custom-checkbox notext">
-                                    <input type="checkbox" class="custom-control-input" id="uid">
-                                    <label class="custom-control-label" for="uid"></label>
-                                </div>
+                                
                             </div>
-                            <div class="nk-tb-col"><span class="sub-text">User</span></div>
+                            <div class="nk-tb-col"><span class="sub-text">Usuario</span></div>
                             <div class="nk-tb-col tb-col-mb"><span class="sub-text">Rut</span></div>
+                            <div class="nk-tb-col tb-col-mb"><span class="sub-text">Unidad</span></div>
+                            <div class="nk-tb-col tb-col-mb"><span class="sub-text">Depto</span></div>
                             <div class="nk-tb-col tb-col-md"><span class="sub-text">Telefono</span></div>
                             <div class="nk-tb-col tb-col-lg"><span class="sub-text">Rol</span></div>
                             <div class="nk-tb-col tb-col-lg"><span class="sub-text">Último Inicio de Sesión</span></div>
@@ -114,19 +113,25 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="nk-tb-col tb-col-mb">
+                            <div class="nk-tb-col tb-col-mb" style="min-width: 100px;">
                                 <span class="tb-amount">{{ user.nr_rut }} </span>
                             </div>
+                            <div class="nk-tb-col tb-col-mb">
+                                <span class="tb-amount">{{ user.unidad.nombre }} </span>
+                            </div>
+                            <div class="nk-tb-col tb-col-mb">
+                                <span class="tb-amount">{{ user.depto.nombre }} </span>
+                            </div>
                             <div class="nk-tb-col tb-col-md">
-                                <span>{{ user.celular}}</span>
+                                <span class="tb-amount">{{ user.celular}}</span>
                             </div>
                             <div class="nk-tb-col tb-col-lg">
                                 <ul class="list-status">
-                                    <li> <span>{{ user.roles[0].name }}</span></li>
+                                    <li> <span class="tb-amount">{{ user.roles[0].name }}</span></li>
                                 </ul>
                             </div>
                             <div class="nk-tb-col tb-col-lg">
-                                <span> {{ user.last_login }}</span>
+                                <span class="tb-amount"> {{ user.last_login }}</span>
                             </div>
                             <div class="nk-tb-col tb-col-md">
                                 <span v-if="user.tp_activo == 1" class="tb-status text-success">Activo</span>
@@ -140,8 +145,8 @@
                                             <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
-                                                    <li @click="showModal(1,user)"><a href="#"><em class="icon ni ni-eye"></em><span>Ver Detalles</span></a></li>
-                                                    <li><a href="#"><em class="icon ni ni-repeat"></em><span>Transaction</span></a></li>
+                                                    <li @click="showModal(1,user)"><a href="#"><em class="icon ni ni-eye"></em><span>Ver</span></a></li>
+                                                    <li><a href="#"><em class="icon ni ni-edit"></em><span>Editar</span></a></li>
                                                     <li><a href="#"><em class="icon ni ni-activity-round"></em><span>Activities</span></a></li>
                                                     <li class="divider"></li>
                                                     <li><a href="#"><em class="icon ni ni-shield-star"></em><span>Reset Pass</span></a></li>
@@ -182,7 +187,7 @@
 
     <!-- Modal Trigger Code -->
     <!-- Detalle Usuario-->
-    <user_detalle  :user="tmp_user"></user_detalle>
+    <user_detalle :init="init" :user="tmp_user"></user_detalle>
     
     
 </template>
@@ -210,6 +215,11 @@ export default {
                                 'to' : 0,
                             },
             offset                     : 3,
+            unidades        : [],
+            deptos          : [],
+            secciones       : [],
+            init            : []
+
         }
     },
     components: {
@@ -247,6 +257,58 @@ export default {
             }
 },
     methods: {
+        getInit()
+        {
+            let me = this;
+            let ruta = '/init'
+
+            axios.post(ruta)
+                .then(response => 
+                {
+                    let tmp_init   = response.data.unidades;
+
+                    this.unidades = tmp_init.map(unidad => ({
+                        id: unidad.id,
+                        nombre: unidad.nombre,
+                        deptos: unidad.deptos
+                        }));
+
+                    this.unidades.forEach(unidad => {
+                        unidad.deptos.forEach(depto => 
+                            {
+                                this.deptos.push({
+                                    id: depto.id,
+                                    nombre: depto.nombre,
+                                    nr_unidad: depto.nr_unidad
+                                    });
+                            });
+                        });
+
+                    this.unidades.forEach(unidad => {
+                        unidad.deptos.forEach(depto => {
+                            depto.secciones.forEach(seccion => {
+                                this.secciones.push({
+                                    nr_unidad: seccion.nr_unidad,
+                                    id: seccion.id,
+                                    nr_depto: depto.id,
+                                    nombre: seccion.nombre
+                                });
+                            });
+                        });
+                    });
+
+                    this.init = {
+                        unidades    : this.unidades,
+                        deptos      : this.deptos,
+                        secciones   : this.secciones
+                    }
+                           
+                
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
         setOrder(order)
         {
             let me = this;
@@ -269,7 +331,7 @@ export default {
             let me = this;
             let ruta = '/users?page=' + me.pagination.current_page+'&cant='+me.nr_show+'&orderBy='+me.orderBy+'&criterio='+me.criterio+'&busqueda='+me.busqueda;
 
-            axios.get(ruta)
+            axios.post(ruta)
                 .then(response => 
                 {
                     let respuesta   = response.data;
@@ -291,11 +353,13 @@ export default {
             if(tp_modal == 1)
                 $("#modalUser").modal('show');
             
-        }
+        },
+        
     },
     mounted(){
 
         this.getUsers();
+        this.getInit();
        
     }
 }
