@@ -16,9 +16,9 @@
 
 
     <!-- Scripts -->
-    @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css'])
+    @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css','resources/css/skins/theme-egyptian.css'])
 </head>
-<body class="nk-body bg-lighter npc-general has-sidebar ">
+<body class="nk-body bg-lighter npc-general has-sidebar" theme="dark">
     
     <div class="nk-app-root">
         <!-- main @s -->

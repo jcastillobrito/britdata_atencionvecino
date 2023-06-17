@@ -1,137 +1,135 @@
 <template>
-    <!-- Modal Content Code -->
+
     <div class="modal fade" tabindex="-1" id="modalCreateUser">
         <div class="modal-dialog modal-dialog-top modal-xl" role="document">
             <div class="modal-content">
-                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <em class="icon ni ni-cross"></em>
-                    </a>
-                    <div class="modal-header bg-success">
-                        <h5 class="modal-title">Crear Usuario</h5>
-                    </div>
-                        <div class="modal-body">
+                </a>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Crear Usuario</h5>
+                </div>
+                <div class="modal-body">
 
-                            <div class="row">
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Nombre</label>
-                                        <div class="form-control-wrap">
-                                            <input v-model="nombres" type="text" class="form-control" id="default-01" placeholder="Nombres">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Apellido Paterno</label>
-                                        <div class="form-control-wrap">
-                                            <input v-model="ap_paterno" type="text" class="form-control" id="default-01" placeholder="Apellido Materno">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Apellido Materno</label>
-                                        <div class="form-control-wrap">
-                                            <input v-model="ap_materno" type="text" class="form-control" id="default-01" placeholder="Apellido Paterno">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Rut</label>
-                                        <div class="form-control-wrap">
-                                            <input v-model="nr_rut" type="text" class="form-control" id="default-01" placeholder="Ingrese Rut">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Email</label>
-                                        <div class="form-control-wrap">
-                                            <input v-model="email" type="text" class="form-control" id="default-01" placeholder="Ingrese Email">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Teléfono</label>
-                                        <div class="form-control-wrap">
-                                            <input  v-model="celular" type="number" maxlength="9" class="form-control" placeholder="Ingrese Celular">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12" >
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Unidad</label>
-                                        <div class="form-control-wrap">
-                                        <select v-model="nr_unidad" @change="filterDeptos()" name="" id="" class="form-control">
-                                                <option :key="index" :value="unidad.id"  v-for="(unidad,index) in unidades"> {{ unidad.nombre }}</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Depto</label>
-                                        <select v-model="nr_depto"  class="form-control">
-                                            <option value="0">Seleccionar Departamento</option>
-                                            <option :key="index" :value="depto.id" v-for="(depto,index) in deptos" >{{ depto.nombre }}</option>
-                                        </select>
-                                        <div class="form-control-wrap">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Rol</label>
-                                        <div class="form-control-wrap">
-                                            <select  v-model="nr_rol" class="form-control" >
-                                                <option :key="index" :value="rol.id" v-for="(rol,index) in roles" >{{ rol.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">Estado</label>
-                                        <div class="form-control-wrap">
-                                            <select v-model="tp_activo" name="" id="" class="form-control">
-                                                <option value="1">Activo</option>
-                                                <option value="0" >Inactivo</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4 col-xs-12 ">
-                                    <div class="form-group">
-                                        <label class="form-label" for="default-01">ID Externo</label>
-                                        <div class="form-control-wrap">
-                                            <input type="text" class="form-control" v-model="id_externo" placeholder="Ingrese el ID Externo">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class=" offset-md-3  col-md-6 col-xs-12 mt-3">
-                                    <button @click="updateUser()" class="btn btn-sm btn-success btn-block">
-                                        <span>Actualizar usuario</span>
-                                    </button>
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Nombre</label>
+                                <div class="form-control-wrap">
+                                    <input v-model="nombres" type="text" class="form-control" id="default-01" placeholder="Nombres">
                                 </div>
                             </div>
-                            
                         </div>
-                    <div class="modal-footer bg-light">
-                        <span class="sub-text">Modal Footer Text</span>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Apellido Paterno</label>
+                                <div class="form-control-wrap">
+                                    <input v-model="ap_paterno" type="text" class="form-control" id="default-01" placeholder="Apellido Materno">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Apellido Materno</label>
+                                <div class="form-control-wrap">
+                                    <input v-model="ap_materno" type="text" class="form-control" id="default-01" placeholder="Apellido Paterno">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Rut</label>
+                                <div class="form-control-wrap">
+                                    <input v-model="nr_rut" type="text" class="form-control" id="default-01" placeholder="Ingrese Rut">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Email</label>
+                                <div class="form-control-wrap">
+                                    <input v-model="email" type="text" class="form-control" id="default-01" placeholder="Ingrese Email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Teléfono</label>
+                                <div class="form-control-wrap">
+                                    <input  v-model="celular" type="number" maxlength="9" class="form-control" placeholder="Ingrese Celular">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12" >
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Unidad</label>
+                                <div class="form-control-wrap">
+                                <select v-model="nr_unidad" @change="filterDeptos()" name="" id="" class="form-control">
+                                        <option :key="index" :value="unidad.id"  v-for="(unidad,index) in unidades"> {{ unidad.nombre }}</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Depto</label>
+                                <select v-model="nr_depto"  class="form-control">
+                                    <option value="0">Seleccionar Departamento</option>
+                                    <option :key="index" :value="depto.id" v-for="(depto,index) in deptos" >{{ depto.nombre }}</option>
+                                </select>
+                                <div class="form-control-wrap">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Rol</label>
+                                <div class="form-control-wrap">
+                                    <select  v-model="nr_rol" class="form-control" >
+                                        <option :key="index" :value="rol.id" v-for="(rol,index) in roles" >{{ rol.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">Estado</label>
+                                <div class="form-control-wrap">
+                                    <select v-model="tp_activo" name="" id="" class="form-control">
+                                        <option value="1">Activo</option>
+                                        <option value="0" >Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-xs-12 ">
+                            <div class="form-group">
+                                <label class="form-label" for="default-01">ID Externo</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" v-model="id_externo" placeholder="Ingrese el ID Externo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" offset-md-3  col-md-6 col-xs-12 mt-3">
+                            <button @click="updateUser()" class="btn btn-success btn-block text-white">
+                                <span>Crear usuario</span>
+                            </button>
+                        </div>
                     </div>
+                    
+                </div>
+                    
             </div>
          </div>
     </div>
