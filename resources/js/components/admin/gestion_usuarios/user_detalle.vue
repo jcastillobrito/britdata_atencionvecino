@@ -6,7 +6,7 @@
                 <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <em class="icon ni ni-cross"></em>
                 </a>
-                <div class="modal-header">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Detalle Usuario</h5>
                 </div>
                 <div class="modal-body">
@@ -131,7 +131,8 @@ export default {
     methods: {
         testPadre(texto)
         {
-            alert(texto)
+            let me = this;
+            me.$emit('callApi');
         }
         
     },

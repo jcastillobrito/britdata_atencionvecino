@@ -37,7 +37,16 @@
                                                 </li><!-- li -->
                                                 <!-- li -->
                                                 <li >
-                                                    <a href="#" class="btn btn-white btn-outline-light"><em class="icon ni ni-download-cloud"></em><span>Export</span></a>
+                                                    <a href="#" class="btn btn-primary btn-outline-light text-white">
+                                                        <em class="icon ni ni-download-cloud"></em>
+                                                        <span>Export</span>
+                                                    </a>
+                                                </li>
+                                                <li >
+                                                    <div @click="showModal(2)" href="#" class="btn btn-success btn-outline-light text-white">
+                                                        <em class="icon ni ni-plus"></em>
+                                                        <span >Crear Usuario</span>
+                                                    </div>
                                                 </li>
                                                 <li>
                                                     <div class="dropdown">
@@ -185,14 +194,22 @@
 
     <!-- Modal Trigger Code -->
     <!-- Detalle Usuario-->
-    <user_detalle :init="init" :user="tmp_user"></user_detalle>
+    <user_detalle @callApi="testUpdateUser()" :init="init" :user="tmp_user"></user_detalle>
+    <user_create :init="init"> </user_create>    
+
     
     
 </template>
 
 <script>
 import axios from 'axios';
+//componentes propios
 import user_detalle from './user_detalle.vue';
+import user_create from './user_create.vue'
+
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+window.toastr = toastr;
 
 export default {
     data() {
@@ -221,7 +238,8 @@ export default {
         }
     },
     components: {
-        user_detalle
+        user_detalle,
+        user_create
     },
     computed:{
 
@@ -255,6 +273,13 @@ export default {
             }
 },
     methods: {
+        
+        testUpdateUser()
+        {
+            this.getUsers();
+            this.showToast('success', '¡Operación exitosa!');
+            
+        },
         getInit()
         {
             let me = this;
@@ -343,15 +368,22 @@ export default {
                 })
             
         },
-        showModal(tp_modal = 1,usuario)
+        showModal(tp_modal = 1,usuario= {})
         {
             let me = this;
 
-            me.tmp_user = usuario;
             me.tp_modal = tp_modal;
 
             if(tp_modal == 1)
-                $("#modalUser").modal('show');
+                {
+                    $("#modalUser").modal('show');
+                    me.tmp_user = usuario;
+
+                }
+            
+            
+            if(tp_modal == 2)
+                $("#modalCreateUser").modal('show');
             
         },
         

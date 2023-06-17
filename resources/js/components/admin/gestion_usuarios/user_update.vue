@@ -111,7 +111,6 @@
         </div>
 
 
-
         <div class=" offset-md-3  col-md-6 col-xs-12 mt-3">
             <button @click="updateUser()" class="btn btn-sm btn-primary btn-block">
                 <span>Actualizar usuario</span>
@@ -139,7 +138,7 @@ export default {
             id_externo  :   1,
             tp_activo   :   1,
             celular     :   1,
-            nombre      :   '',
+            nombres     :   '',
             ap_paterno  :   '',
             ap_materno  :   '',
             nr_rut      :   '',
