@@ -89,7 +89,7 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="tabItem1">
-                                                <user_update :init="init"  :user="user"></user_update>
+                                                <user_update @eventoPersonalizado="testPadre" :init="init"  :user="user"></user_update>
                                             </div>
                                             <div class="tab-pane" id="tabItem2">
                                                 <p>B</p>
@@ -129,10 +129,13 @@ export default {
     },
     props: ['user','init'],
     methods: {
+        testPadre(texto)
+        {
+            alert(texto)
+        }
         
     },
     mounted() {
-        console.log(this.user);
     }
 }
 </script>

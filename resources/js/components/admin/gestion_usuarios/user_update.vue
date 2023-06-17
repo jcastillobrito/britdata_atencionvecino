@@ -5,7 +5,7 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Nombre</label>
                 <div class="form-control-wrap">
-                    <input v-model="tmp_user.nombres" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <input v-model="nombres" type="text" class="form-control" id="default-01" placeholder="Nombres">
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Apellido Paterno</label>
                 <div class="form-control-wrap">
-                    <input v-model="tmp_user.ap_paterno" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <input v-model="ap_paterno" type="text" class="form-control" id="default-01" placeholder="Apellido Materno">
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Apellido Materno</label>
                 <div class="form-control-wrap">
-                    <input v-model="tmp_user.ap_materno" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <input v-model="ap_materno" type="text" class="form-control" id="default-01" placeholder="Apellido Paterno">
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Rut</label>
                 <div class="form-control-wrap">
-                    <input v-model="tmp_user.nr_rut" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <input v-model="nr_rut" type="text" class="form-control" id="default-01" placeholder="Ingrese Rut">
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Email</label>
                 <div class="form-control-wrap">
-                    <input v-model="tmp_user.email" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <input v-model="email" type="text" class="form-control" id="default-01" placeholder="Ingrese Email">
                 </div>
             </div>
         </div>
@@ -50,17 +50,17 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Teléfono</label>
                 <div class="form-control-wrap">
-                    <input v-model="tmp_user.celular" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <input  v-model="celular" type="number" maxlength="9" class="form-control" placeholder="Ingrese Celular">
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-xs-12 ">
+        <div class="col-md-6 col-xs-12" v-if="tmp_user.unidad">
             <div class="form-group">
                 <label class="form-label" for="default-01">Unidad</label>
                 <div class="form-control-wrap">
                    <select v-model="nr_unidad" @change="filterDeptos()" name="" id="" class="form-control">
-                        <option :key="index" :value="unidad.id"  v-for="(unidad,index) in setUp.unidades"> {{ unidad.nombre }}</option>
+                        <option :key="index" :value="unidad.id"  v-for="(unidad,index) in unidades"> {{ unidad.nombre }}</option>
                    </select>
                 </div>
             </div>
@@ -69,7 +69,8 @@
         <div class="col-md-6 col-xs-12 ">
             <div class="form-group">
                 <label class="form-label" for="default-01">Depto</label>
-                <select name="" id="" class="form-control">
+                <select v-model="nr_depto"  class="form-control">
+                    <option value="0">Seleccionar Departamento</option>
                     <option :key="index" :value="depto.id" v-for="(depto,index) in deptos" >{{ depto.nombre }}</option>
                 </select>
                 <div class="form-control-wrap">
@@ -77,68 +78,141 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-xs-12 ">
+        <div class="col-md-4 col-xs-12 ">
             <div class="form-group">
                 <label class="form-label" for="default-01">Rol</label>
                 <div class="form-control-wrap">
-                    <input v-if="tmp_user.roles" v-model="tmp_user.roles[0].name" type="text" class="form-control" id="default-01" placeholder="Input placeholder">
+                    <select  v-model="nr_rol" class="form-control" >
+                        <option :key="index" :value="rol.id" v-for="(rol,index) in roles" >{{ rol.name }}</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-xs-12 ">
+        <div class="col-md-4 col-xs-12 ">
             <div class="form-group">
                 <label class="form-label" for="default-01">Estado</label>
                 <div class="form-control-wrap">
-                    <select name="" id="" class="form-control">
+                    <select v-model="tp_activo" name="" id="" class="form-control">
                         <option value="1">Activo</option>
                         <option value="0" >Inactivo</option>
                     </select>
                 </div>
             </div>
         </div>
+        
+        <div class="col-md-4 col-xs-12 ">
+            <div class="form-group">
+                <label class="form-label" for="default-01">ID Externo</label>
+                <div class="form-control-wrap">
+                    <input type="text" class="form-control" v-model="id_externo" placeholder="Ingrese el ID Externo">
+                </div>
+            </div>
+        </div>
+
+
 
         <div class=" offset-md-3  col-md-6 col-xs-12 mt-3">
-            <button class="btn btn-sm btn-primary btn-block">
+            <button @click="updateUser()" class="btn btn-sm btn-primary btn-block">
                 <span>Actualizar usuario</span>
             </button>
         </div>
-      
-
-
         
 
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
 
     props: ['user','init'],
     data() {
         return {
             tmp_user : { ...this.user },
-            setUp : {},
-            deptos :{},
-            nr_unidad : 1
+            setUp       :   {},
+            unidades    :   {},
+            deptos      :   {},
+            roles       :   {},
+            nr_unidad   :   1,
+            nr_depto    :   1,
+            nr_rol      :   1,
+            id_externo  :   1,
+            tp_activo   :   1,
+            celular     :   1,
+            nombre      :   '',
+            ap_paterno  :   '',
+            ap_materno  :   '',
+            nr_rut      :   '',
+            email       :   '',
         }
     },
     watch: {
         user(newVal) {
-            this.tmp_user = { ...newVal }; // Actualizar tmp_user cuando user cambie
+            this.tmp_user   = { ...newVal }; // Actualizar tmp_user cuando user cambie
+
+            this.nr_unidad  = this.tmp_user.unidad.id;
+            this.nr_rol     = this.tmp_user.roles[0].id;
+            this.tp_activo  = this.tmp_user.tp_activo;
+            this.id_externo = this.tmp_user.id_externo;
+            this.celular    = this.tmp_user.celular;
+            this.nombres    = this.tmp_user.nombres;
+            this.ap_paterno = this.tmp_user.ap_paterno;
+            this.ap_materno = this.tmp_user.ap_materno;
+            this.nr_rut     = this.tmp_user.nr_rut;
+            this.email      = this.tmp_user.email;
+
+            this.filterDeptos()
+
+
+
+            if(this.tmp_user.depto)
+                this.nr_depto = this.tmp_user.depto.id;
+            else
+                this.nr_depto = 0
+
+
         },
         init(newVal) {
             this.setUp = { ...newVal }; // Actualizar tmp_user cuando user cambie
+            this.unidades = this.setUp.unidades
+            this.deptos = this.setUp.deptos
+            this.roles = this.setUp.roles;
+
         }
     },
     methods: {
-
+        updateUser()
+        {
+            let me = this;
+            let user_tmp = {
+                nr_unidad   : me.nr_unidad,
+                nr_depto    : me.nr_depto,
+                nr_rol      : me.nr_rol,
+                tp_activo   : me.tp_activo,
+                id_externo  : me.id_externo,
+                celular     : me.celular,
+                nombres     : me.nombres,
+                ap_paterno  : me.ap_paterno,
+                ap_materno  : me.ap_materno,
+                nr_rut      : me.nr_rut,
+                email       : me.email,
+                id          : me.tmp_user.id     
+            }
+            
+            axios.put('/user',user_tmp)
+            .then(function (response) 
+            {
+                console.log(response);
+                me.$emit('eventoPersonalizado', 'Juan Carlos');
+                //me.$emit('updateUser',response.data)
+            })
+        },
         filterDeptos()
         {
             let me = this
-
-            me.deptos = me.setUp.deptos.filter(el => el.nr_unidad == me.nr_unidad);
-
-            console.log(me.deptos)
+            if(me.setUp.deptos)
+                me.deptos = me.setUp.deptos.filter(el => el.nr_unidad == me.nr_unidad);
+            
         }
      
     },

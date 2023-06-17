@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Spatie\Permission\Models\Role;
 use App\Models\Unidad;
 use App\Models\Depto;
 USE App\Models\Seccion;
@@ -22,8 +23,11 @@ class JerarquiaController extends Controller
                                     ->where('nr_institucion','=',$nr_institucion)
                                     ->get();
 
+        $roles = Role::select('name','id')->get();
+
         return [
-            'unidades' => $unidades
+            'unidades' => $unidades,
+            'roles'    => $roles
         ];
 
         

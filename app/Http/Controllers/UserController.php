@@ -3,11 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Auth;
+
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+
+
+use App\Http\Requests\UserCreateRequest;
 
 class UserController extends Controller
 {
+    public function update(UserCreateRequest $request)
+    {
+        $dataToUpdate   = $request->except(['id','nr_rol']);
+        $id             = $request->input('id');
+
+        $user           = User::findOrFail($id);
+
+        $role           = Role::findById($request->input('nr_rol')); // Obtén el nuevo ID del rol desde la solicitud
+
+        // Actualizar los campos del usuario con los datos enviados en la solicitud
+        User::where('id', $id)->update($dataToUpdate);
+        $user->syncRoles([$role]); // Asignar el nuevo rol como el único rol del usuario
+
+    }
+
     public function index(Request $request)
     {
         //obtener el atributo xx del usuario en sesion

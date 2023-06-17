@@ -101,7 +101,6 @@
                                 </div>
                             </div>
                             <div class="nk-tb-col">
-                                <a href="html/user-details-regular.html">
                                     <div class="user-card">
                                         <div class="user-avatar" :style="{ background: user.roles[0].color }">
                                             <span>{{ user.letters }}</span>
@@ -111,7 +110,6 @@
                                             <span>{{ user.email }}</span>
                                         </div>
                                     </div>
-                                </a>
                             </div>
                             <div class="nk-tb-col tb-col-mb" style="min-width: 100px;">
                                 <span class="tb-amount">{{ user.nr_rut }} </span>
@@ -120,7 +118,7 @@
                                 <span class="tb-amount">{{ user.unidad.nombre }} </span>
                             </div>
                             <div class="nk-tb-col tb-col-mb">
-                                <span class="tb-amount">{{ user.depto.nombre }} </span>
+                                <span v-if="user.depto" class="tb-amount">{{ user.depto.nombre }} </span>
                             </div>
                             <div class="nk-tb-col tb-col-md">
                                 <span class="tb-amount">{{ user.celular}}</span>
@@ -262,10 +260,11 @@ export default {
             let me = this;
             let ruta = '/init'
 
-            axios.post(ruta)
+            axios.get(ruta)
                 .then(response => 
                 {
                     let tmp_init   = response.data.unidades;
+                    let roles      = response.data.roles;
 
                     this.unidades = tmp_init.map(unidad => ({
                         id: unidad.id,
@@ -300,7 +299,8 @@ export default {
                     this.init = {
                         unidades    : this.unidades,
                         deptos      : this.deptos,
-                        secciones   : this.secciones
+                        secciones   : this.secciones,
+                        roles       : roles
                     }
                            
                 
@@ -331,7 +331,7 @@ export default {
             let me = this;
             let ruta = '/users?page=' + me.pagination.current_page+'&cant='+me.nr_show+'&orderBy='+me.orderBy+'&criterio='+me.criterio+'&busqueda='+me.busqueda;
 
-            axios.post(ruta)
+            axios.get(ruta)
                 .then(response => 
                 {
                     let respuesta   = response.data;
