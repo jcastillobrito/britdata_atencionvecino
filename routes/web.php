@@ -24,8 +24,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Gestion de Usuarios
 Route::group(['middleware' => ['role:ADMIN']], function () 
 {
+    //Gestion usuarios
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.get');
-    Route::put('/user', [App\Http\Controllers\UserController::class, 'update'])->name('users.store');
+    Route::put('/user', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::post('/user', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+
+
     Route::get('/init', [App\Http\Controllers\JerarquiaController::class, 'init'])->name('init.get');
     
 });

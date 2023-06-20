@@ -12,11 +12,13 @@
                 <div class="modal-body">
 
                     <div class="row">
+
                         <div class="col-md-4 col-xs-12 ">
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Nombre</label>
                                 <div class="form-control-wrap">
-                                    <input v-model="nombres" type="text" class="form-control" id="default-01" placeholder="Nombres">
+                                    <input v-model="nombres" type="text" class="form-control"  placeholder="Nombres">
+                                    <small class="text-danger" v-if="errors.nombres">{{ errors.nombres[0] }}</small>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +27,9 @@
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Apellido Paterno</label>
                                 <div class="form-control-wrap">
-                                    <input v-model="ap_paterno" type="text" class="form-control" id="default-01" placeholder="Apellido Materno">
+                                    <input v-model="ap_paterno" type="text" class="form-control"  placeholder="Apellido Materno">
+                                    <small class="text-danger" v-if="errors.ap_paterno">{{ errors.ap_paterno[0] }}</small>
+
                                 </div>
                             </div>
                         </div>
@@ -34,7 +38,9 @@
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Apellido Materno</label>
                                 <div class="form-control-wrap">
-                                    <input v-model="ap_materno" type="text" class="form-control" id="default-01" placeholder="Apellido Paterno">
+                                    <input v-model="ap_materno" type="text" class="form-control"  placeholder="Apellido Paterno">
+                                    <small class="text-danger" v-if="errors.ap_materno">{{ errors.ap_materno[0] }}</small>
+
                                 </div>
                             </div>
                         </div>
@@ -43,7 +49,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Rut</label>
                                 <div class="form-control-wrap">
-                                    <input v-model="nr_rut" type="text" class="form-control" id="default-01" placeholder="Ingrese Rut">
+                                    <input v-model="nr_rut" type="text" class="form-control"  placeholder="Ingrese Rut">
+                                    <small class="text-danger" v-if="errors.nr_rut">{{ errors.nr_rut[0] }}</small>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +59,9 @@
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Email</label>
                                 <div class="form-control-wrap">
-                                    <input v-model="email" type="text" class="form-control" id="default-01" placeholder="Ingrese Email">
+                                    <input v-model="email" type="text" class="form-control"  placeholder="Ingrese Email">
+                                    <small class="text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
+
                                 </div>
                             </div>
                         </div>
@@ -62,6 +71,8 @@
                                 <label class="form-label" for="default-01">Teléfono</label>
                                 <div class="form-control-wrap">
                                     <input  v-model="celular" type="number" maxlength="9" class="form-control" placeholder="Ingrese Celular">
+                                    <small class="text-danger" v-if="errors.celular">{{ errors.celular[0] }}</small>
+
                                 </div>
                             </div>
                         </div>
@@ -70,9 +81,11 @@
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Unidad</label>
                                 <div class="form-control-wrap">
-                                <select v-model="nr_unidad" @change="filterDeptos()" name="" id="" class="form-control">
-                                        <option :key="index" :value="unidad.id"  v-for="(unidad,index) in unidades"> {{ unidad.nombre }}</option>
-                                </select>
+                                    <select v-model="nr_unidad" @change="filterDeptos()" name="" id="" class="form-control">
+                                            <option :key="index" :value="unidad.id"  v-for="(unidad,index) in unidades"> {{ unidad.nombre }}</option>
+                                    </select>
+                                    <small class="text-danger" v-if="errors.nr_unidad">{{ errors.nr_unidad[0] }}</small>
+
                                 </div>
                             </div>
                         </div>
@@ -84,6 +97,7 @@
                                     <option value="0">Seleccionar Departamento</option>
                                     <option :key="index" :value="depto.id" v-for="(depto,index) in deptos" >{{ depto.nombre }}</option>
                                 </select>
+                                <small class="text-danger" v-if="errors.nr_depto">{{ errors.nr_depto[0] }}</small>
                                 <div class="form-control-wrap">
                                 </div>
                             </div>
@@ -96,6 +110,7 @@
                                     <select  v-model="nr_rol" class="form-control" >
                                         <option :key="index" :value="rol.id" v-for="(rol,index) in roles" >{{ rol.name }}</option>
                                     </select>
+                                    <small class="text-danger" v-if="errors.nr_rol">{{ errors.nr_rol[0] }}</small>
                                 </div>
                             </div>
                         </div>
@@ -108,6 +123,7 @@
                                         <option value="1">Activo</option>
                                         <option value="0" >Inactivo</option>
                                     </select>
+                                    <small class="text-danger" v-if="errors.tp_activo">{{ errors.tp_activo[0] }}</small>
                                 </div>
                             </div>
                         </div>
@@ -117,12 +133,13 @@
                                 <label class="form-label" for="default-01">ID Externo</label>
                                 <div class="form-control-wrap">
                                     <input type="text" class="form-control" v-model="id_externo" placeholder="Ingrese el ID Externo">
+                                    <small class="text-danger" v-if="errors.id_externo">{{ errors.id_externo[0] }}</small>
                                 </div>
                             </div>
                         </div>
 
                         <div class=" offset-md-3  col-md-6 col-xs-12 mt-3">
-                            <button @click="updateUser()" class="btn btn-success btn-block text-white">
+                            <button @click="createUser()" class="btn btn-success btn-block text-white">
                                 <span>Crear usuario</span>
                             </button>
                         </div>
@@ -150,14 +167,15 @@ export default {
             nr_unidad   :   1,
             nr_depto    :   1,
             nr_rol      :   1,
-            id_externo  :   1,
+            id_externo  :   '',
             tp_activo   :   1,
-            celular     :   1,
+            celular     :   '',
             nombres      :   '',
             ap_paterno  :   '',
             ap_materno  :   '',
             nr_rut      :   '',
             email       :   '',
+            errors      :   [],
         }
     },
     watch: {
@@ -174,7 +192,7 @@ export default {
         }
     },
     methods: {
-        updateUser()
+        createUser()
         {
             let me = this;
             let user_tmp = {
@@ -192,13 +210,20 @@ export default {
                 id          : me.tmp_user.id     
             }
             
-            axios.put('/user',user_tmp)
+            axios.post('/user',user_tmp)
             .then(function (response) 
             {
-                console.log(response);
-                me.$emit('eventoPersonalizado', 'Juan Carlos');
-                //me.$emit('updateUser',response.data)
-            })
+               let resp = response
+               this.showToast(resp.color,resp.m)
+
+            }).catch(function (error) {
+                 if(error.response.status == 422)
+                    {
+                        me.showToast('error','Favor revisar Formulario')
+                        me.errors = error.response.data.errors;
+
+                    }
+            });
         },
         filterDeptos()
         {

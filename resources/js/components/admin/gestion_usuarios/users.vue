@@ -277,7 +277,6 @@ export default {
         testUpdateUser()
         {
             this.getUsers();
-            this.showToast('success', '¡Operación exitosa!');
             
         },
         getInit()
