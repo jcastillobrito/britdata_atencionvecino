@@ -53,7 +53,8 @@ export default {
       }
       
       // Formatear el RUT con puntos y guión
-      const rutFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + dv;
+      //const rutFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + dv;
+      const rutFormateado = cuerpo + '-' + dv;
       
       return rutFormateado;
     }

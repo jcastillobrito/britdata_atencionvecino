@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label class="form-label" for="default-01">Rut</label>
                 <div class="form-control-wrap">
-                    <input v-model="nr_rut" type="text" class="form-control" id="default-01" placeholder="Ingrese Rut">
+                    <input @change="parseRut" v-model="nr_rut" type="text" class="form-control" id="default-01" placeholder="Ingrese Rut">
                     <small class="text-danger" v-if="errors.nr_rut">{{ errors.nr_rut[0] }}</small>
                 </div>
             </div>
@@ -203,6 +203,14 @@ export default {
         }
     },
     methods: {
+        parseRut()
+        {
+          let tmp = this.formatearRut(this.nr_rut)
+
+          if(tmp)
+            this.nr_rut = tmp
+         
+        },
         updateUser()
         {
             let me          = this;

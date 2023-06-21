@@ -10,7 +10,6 @@ use Spatie\Permission\Models\Role;
 use Freshwork\ChileanBundle\Rut;
 
 
-
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserCreateRequest;
 
@@ -24,14 +23,16 @@ class UserController extends Controller
         $id_institucion = auth()->user()->nr_institucion;
 
         $rol            = $request->input('nr_rol'); // Obtén el nuevo ID del rol desde la solicitud
-
+        $rut            = Rut::parse($request->nr_rut)->format(Rut::FORMAT_WITH_DASH);
 
         $clave          = '123456';
         $password       = bcrypt($clave);
 
         // Crear los campos del usuario con los datos enviados en la solicitud
-        $dataToUpdate['password'] = $password;
+        $dataToUpdate['password']       = $password;
         $dataToUpdate['nr_institucion'] = $id_institucion;
+        $dataToUpdate['nr_rut']         = $rut;
+
 
         try {
         
@@ -41,7 +42,8 @@ class UserController extends Controller
 
        } catch (\Throwable $th) 
        {
-        return ['error'=>1,'color'=>'error','msg'=>'Error al crear el usuario'];
+            dd($th);
+          return ['error'=>1,'color'=>'error','msg'=>'Error al crear el usuario'];
        }
     }
 
@@ -51,7 +53,8 @@ class UserController extends Controller
         $dataToUpdate   = $request->except(['id','nr_rol']);
         $id             = $request->input('id');
 
-        $rut           = Rut::parse($request->nr_rut)->format(Rut::FORMAT_WITH_DASH); //return 12345678-5.
+
+        $rut            = Rut::parse($request->nr_rut)->format(Rut::FORMAT_WITH_DASH);
 
         try {
         
