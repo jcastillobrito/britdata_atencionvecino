@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,25 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
 
-Auth::routes(['register' => false]);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Update User Details
+Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-//Gestion de Usuarios
-Route::group(['middleware' => ['role:ADMIN']], function () 
-{
-    //Gestion usuarios
-    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.get');
-    Route::put('/user', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
-    Route::post('/user', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
-
-    Route::get('/init', [App\Http\Controllers\JerarquiaController::class, 'init'])->name('init.get');
-    
-});
-
-
+//Language Translation
+Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);

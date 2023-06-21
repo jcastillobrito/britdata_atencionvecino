@@ -2,40 +2,32 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable;
 
-    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
+        'name',
+        'email',
         'password',
-        'nombres',
-        'ap_paterno',
-        'ap_materno',
-        'nr_rut',
-        'id_externo',
-        'email',
-        'celular',
-        'email',
-        'nr_institucion',
-        'last_login',
-        'nr_unidad',
-        'nr_depto',
-        'nr_seccion',
+        'dob', 
+        'avatar',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for arrays.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -43,28 +35,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function institucion()
-    {
-        return $this->belongsTo(Institucion::class,'nr_institucion','id');
-    }
-
-    public function Unidad()
-    {
-        return $this->belongsTo(Unidad::class,'nr_unidad','id');
-    }
-
-    public function Depto()
-    {
-        return $this->belongsTo(Depto::class,'nr_depto','id');
-    }
-
-   
 }
