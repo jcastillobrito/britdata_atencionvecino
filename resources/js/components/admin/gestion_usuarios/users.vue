@@ -43,7 +43,7 @@
                                                     </a>
                                                 </li>
                                                 <li >
-                                                    <div @click="showModal(2)" href="#" class="btn btn-success btn-outline-light text-white">
+                                                    <div @click="showModal(2)" href="#" class="btn btn-info btn-outline-light text-white">
                                                         <em class="icon ni ni-plus"></em>
                                                         <span >Crear Usuario</span>
                                                     </div>
@@ -123,7 +123,7 @@
                             <div class="nk-tb-col tb-col-mb" style="min-width: 100px;">
                                 <span class="tb-amount">{{ user.nr_rut }} </span>
                             </div>
-                            <div class="nk-tb-col tb-col-mb">
+                            <div v-if="user.unidad" class="nk-tb-col tb-col-mb">
                                 <span class="tb-amount">{{ user.unidad.nombre }} </span>
                             </div>
                             <div class="nk-tb-col tb-col-mb">

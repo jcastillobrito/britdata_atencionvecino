@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-xs-12" v-if="tmp_user.unidad">
+        <div class="col-md-6 col-xs-12" >
             <div class="form-group">
                 <label class="form-label" for="default-01">Unidad</label>
                 <div class="form-control-wrap">
@@ -132,7 +132,7 @@
 
         <div class=" offset-md-3  col-md-6 col-xs-12 mt-3">
             <button @click="updateUser()" class="btn btn-sm btn-primary btn-block">
-                <span>Actualizar usuario</span>
+                <span>Actualizar Usuario</span>
             </button>
         </div>
         
@@ -154,9 +154,9 @@ export default {
             nr_unidad   :   1,
             nr_depto    :   1,
             nr_rol      :   1,
-            id_externo  :   1,
+            id_externo  :   '',
             tp_activo   :   1,
-            celular     :   1,
+            celular     :   '',
             nombres     :   '',
             ap_paterno  :   '',
             ap_materno  :   '',
@@ -170,7 +170,9 @@ export default {
         user(newVal) {
             this.tmp_user   = { ...newVal }; // Actualizar tmp_user cuando user cambie
 
+            if(this.tmp_user.unidad)
             this.nr_unidad  = this.tmp_user.unidad.id;
+
             this.nr_rol     = this.tmp_user.roles[0].id;
             this.tp_activo  = this.tmp_user.tp_activo;
             this.id_externo = this.tmp_user.id_externo;
@@ -203,8 +205,9 @@ export default {
     methods: {
         updateUser()
         {
-            let me = this;
-            let user_tmp = {
+            let me          = this;
+            me.errors       = []
+            let user_tmp    = {
                 nr_unidad   : me.nr_unidad,
                 nr_depto    : me.nr_depto,
                 nr_rol      : me.nr_rol,

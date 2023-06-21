@@ -7,6 +7,7 @@ use Auth;
 
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Freshwork\ChileanBundle\Rut;
 
 
 
