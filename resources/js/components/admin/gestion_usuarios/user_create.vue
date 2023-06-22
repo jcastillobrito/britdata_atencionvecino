@@ -225,7 +225,7 @@ export default {
                this.showToast(resp.color,resp.m)
 
             }).catch(function (error) {
-                 if(error.response.status == 422)
+                 if(error && error.response.status == 422)
                     {
                         me.showToast('error','Favor revisar Formulario')
                         me.errors = error.response.data.errors;

@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
+//Modelos
 use App\Models\User;
+use App\Models\Message;
+
 use Spatie\Permission\Models\Role;
 use Freshwork\ChileanBundle\Rut;
 
 
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserCreateRequest;
+
+//Notificaciones
+use App\Notifications\CreatePassword;
+use App\Notifications\UpdatePassword;
+
 
 class UserController extends Controller
 {
@@ -27,7 +35,6 @@ class UserController extends Controller
 
         $clave          = '123456';
         $password       = bcrypt($clave);
-
         // Crear los campos del usuario con los datos enviados en la solicitud
         $dataToUpdate['password']       = $password;
         $dataToUpdate['nr_institucion'] = $id_institucion;
@@ -38,6 +45,16 @@ class UserController extends Controller
         
                 $user = User::create($dataToUpdate);
                 $user->syncRoles([$rol]); // Asignar el nuevo rol como el único rol del usuario
+
+                $message = Message::create([
+                    'sender_id'     =>  auth()->user()->id,
+                    'recipient_id'  =>  $user->id,
+                    'body'          =>  'Creación de Cuenta',
+                ]);
+
+                //Notificacion
+                $user->notify(new CreatePassword($message));
+
                 return ['error'=>0,'color'=>'success','msg'=>'Usuario creado correctamente'];
 
        } catch (\Throwable $th) 

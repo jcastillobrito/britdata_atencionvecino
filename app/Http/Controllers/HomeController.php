@@ -35,10 +35,13 @@ class HomeController extends Controller
 
         $mensaje = "SISTEMA EN DESARROLLO";
 
+        $notifications = $user->notifications()->latest()->take(5)->get();
+
         return view('home')
                 ->with('nombre',$nombre)
                 ->with('nm_institucion',$nm_institucion)
                 ->with('role',$role)
+                ->with('notifications',$notifications)
                 ->with('mensaje',$mensaje);
     }
 }

@@ -24,12 +24,78 @@
                             </div><!-- .nk-header-news -->
                             <div class="nk-header-tools">
                                 <ul class="nk-quick-nav">
+                                    <li  class="dropdown notification-dropdown  mx-2">
+                                        <a href="#" class="dropdown-toggle " data-bs-toggle="dropdown">
+                                            <button class="btn  btn-outline-light text-white  {{ auth()->user()->unreadNotifications->count()?'btn-warning':'btn-success' }}">
+                                                <em class="icon ni ni-bell"></em>
+                                            </button>
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ auth()->user()->unreadNotifications->count() }}  
+                                            <span class="visually-hidden">unread messages</span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
+                                            <div class="dropdown-head">
+                                                <span class="sub-title nk-dropdown-title">Notifications</span>
+                                                <a href="#">Mark All as Read</a>
+                                            </div>
+                                            <div class="dropdown-body">
+                                                <div class="nk-notification">
+
+                                                @foreach($notifications as $notification)
+                                                    
+                                                    
+                                                            
+                                                        @if(!$notification->read_at)
+                                                        <div class="nk-notification-item dropdown-inner">
+                                                            <div class="nk-notification-icon">
+                                                                <form method="POST" action="{{ route('notifications.read',$notification->id) }}" >
+                                                                    {{method_field('PATCH')}}
+                                                                    {{csrf_field() }}
+                                                                    <button class="icon icon-circle bg-warning-dim ni  ni-eye-off-fill sin-borde"></button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="nk-notification-content">
+                                                                <div class="nk-notification-text">{{ $notification->data['body']}}</div>
+                                                                <div class="nk-notification-time">{{ date('d-m-Y', strtotime($notification->data['created_at'])) }}</div>
+                                                            </div>
+                                                        </div> 
+                                                        @else
+                                                            
+
+                                                            <div class="nk-notification-item dropdown-inner">
+                                                            <div class="nk-notification-icon">
+                                                                <form method="POST" action="{{ route('notifications.read',$notification->id) }}" >
+                                                                    {{method_field('PATCH')}}
+                                                                    {{csrf_field() }}
+                                                                    <button class="icon icon-circle bg-success-dim ni  ni-eye-fill sin-borde"></button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="nk-notification-content">
+                                                                <div class="nk-notification-text"> {{ $notification->data['body']}}  <strong><i>...Leido</i></strong>  </div>
+                                                                <div class="nk-notification-time">{{ date('d-m-Y', strtotime($notification->data['created_at'])) }}</div>
+                                                            </div>
+                                                        </div> 
+                                                        @endif
+
+                                                            
+                                                        
+
+
+
+                                                @endforeach
+                                                
+                                                    
+                                                </div><!-- .nk-notification -->
+                                            </div><!-- .nk-dropdown-body -->
+                                            <div class="dropdown-foot center">
+                                                <a href="#">View All</a>
+                                            </div>
+                                        </div>
+                                    </li>
                                     <li class="dropdown user-dropdown">
                                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                                             <div class="user-toggle">
-                                                <div class="user-avatar sm">
-                                                    <em class="icon ni ni-user-alt"></em>
-                                                </div>
+                                                
                                                 <div class="user-info d-none d-md-block">
                                                     <div class="user-status">{{$nm_institucion}}</div>
                                                     <div class="user-name dropdown-indicator">{{$nombre.' - '.$role}}</div>
@@ -71,78 +137,7 @@
                                             </div>
                                         </div>
                                     </li><!-- .dropdown -->
-                                    <li class="dropdown notification-dropdown me-n1">
-                                        <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
-                                            <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em></div>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
-                                            <div class="dropdown-head">
-                                                <span class="sub-title nk-dropdown-title">Notifications</span>
-                                                <a href="#">Mark All as Read</a>
-                                            </div>
-                                            <div class="dropdown-body">
-                                                <div class="nk-notification">
-                                                    <div class="nk-notification-item dropdown-inner">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                                                            <div class="nk-notification-time">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nk-notification-item dropdown-inner">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                                                            <div class="nk-notification-time">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nk-notification-item dropdown-inner">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                                                            <div class="nk-notification-time">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nk-notification-item dropdown-inner">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                                                            <div class="nk-notification-time">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nk-notification-item dropdown-inner">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                                                            <div class="nk-notification-time">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nk-notification-item dropdown-inner">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                                                            <div class="nk-notification-time">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- .nk-notification -->
-                                            </div><!-- .nk-dropdown-body -->
-                                            <div class="dropdown-foot center">
-                                                <a href="#">View All</a>
-                                            </div>
-                                        </div>
-                                    </li><!-- .dropdown -->
+                                   <!-- .dropdown -->
                                 </ul><!-- .nk-quick-nav -->
                             </div><!-- .nk-header-tools -->
                         </div><!-- .nk-header-wrap -->

@@ -14,6 +14,12 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
+    <style>
+        .sin-borde{
+            border: none !important;
+        }
+    </style>
+
 
     <!-- Scripts -->
     @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css','resources/css/skins/theme-egyptian.css'])

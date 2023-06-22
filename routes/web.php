@@ -31,6 +31,9 @@ Route::group(['middleware' => ['role:ADMIN']], function ()
 
 
     Route::get('/init', [App\Http\Controllers\JerarquiaController::class, 'init'])->name('init.get');
+
+    //Notificaciones
+    Route::patch('/notifications/{id}', [App\Http\Controllers\NotificationController::class, 'read'])->name('notifications.read');
     
 });
 
