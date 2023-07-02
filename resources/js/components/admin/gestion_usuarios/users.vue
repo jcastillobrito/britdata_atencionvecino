@@ -99,7 +99,6 @@
                             <div class="nk-tb-col tb-col-lg"><span class="sub-text">Rol</span></div>
                             <div class="nk-tb-col tb-col-lg"><span class="sub-text">Último Inicio de Sesión</span></div>
                             <div class="nk-tb-col tb-col-md"><span class="sub-text">Estado</span></div>
-                            <div class="nk-tb-col tb-col-md"><span class="sub-text">Opciones</span></div>
                             
                         </div><!-- .nk-tb-item -->
                         <div class="nk-tb-item" v-for="(user,index) in users" :key="index">
@@ -123,11 +122,13 @@
                             <div class="nk-tb-col tb-col-mb" style="min-width: 100px;">
                                 <span class="tb-amount">{{ user.nr_rut }} </span>
                             </div>
-                            <div v-if="user.unidad" class="nk-tb-col tb-col-mb">
-                                <span class="tb-amount">{{ user.unidad.nombre }} </span>
+                            <div  class="nk-tb-col tb-col-mb">
+                                <span v-if="user.unidad" class="tb-amount">{{ user.unidad.nombre }} </span>
+                                <span v-else> -</span>
                             </div>
                             <div class="nk-tb-col tb-col-mb">
                                 <span v-if="user.depto" class="tb-amount">{{ user.depto.nombre }} </span>
+                                <span v-else> - </span>
                             </div>
                             <div class="nk-tb-col tb-col-md">
                                 <span class="tb-amount">{{ user.celular}}</span>
@@ -153,8 +154,6 @@
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
                                                     <li @click="showModal(1,user)"><a href="#"><em class="icon ni ni-eye"></em><span>Ver</span></a></li>
-                                                    <li><a href="#"><em class="icon ni ni-edit"></em><span>Editar</span></a></li>
-                                                    <li><a href="#"><em class="icon ni ni-activity-round"></em><span>Activities</span></a></li>
                                                     <li class="divider"></li>
                                                     <li><a href="#"><em class="icon ni ni-shield-star"></em><span>Reset Pass</span></a></li>
                                                     <li><a href="#"><em class="icon ni ni-shield-off"></em><span>Reset 2FA</span></a></li>

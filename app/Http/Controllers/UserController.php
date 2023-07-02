@@ -8,6 +8,8 @@ use Auth;
 //Modelos
 use App\Models\User;
 use App\Models\Message;
+use App\Models\Institucion;
+
 
 use Spatie\Permission\Models\Role;
 use Freshwork\ChileanBundle\Rut;
@@ -20,9 +22,29 @@ use App\Http\Requests\UserCreateRequest;
 use App\Notifications\CreatePassword;
 use App\Notifications\UpdatePassword;
 
+use App\Http\Controllers\UtilsController;
+
 
 class UserController extends Controller
 {
+    protected $Utils;
+
+    public function __construct()
+    {
+        $this->Utils = (new UtilsController());
+    }
+
+    public function page()
+    {
+        $usuario = $this->Utils->SessionUser();
+        
+        return view('users.users')
+                ->with('nombre'         ,$usuario['nombre'])
+                ->with('nm_institucion' ,$usuario['nm_institucion'])
+                ->with('role'           ,$usuario['role'])
+                ->with('notifications'  ,$usuario['notifications'])
+                ->with('mensaje'        ,$usuario['mensaje']);
+    }
 
     public function store(UserCreateRequest $request)
     {

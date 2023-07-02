@@ -4,44 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Institucion;
+
+use App\Http\Controllers\UtilsController;
+
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    protected $Utils;
+    
+
     public function __construct()
     {
         $this->middleware('auth');
+        $this->Utils = new UtilsController;
     }
-
-    
-
 
 
     public function index()
     {
-        $user           = Auth()->user();
-        $nombre         = $user->nombres.' '.$user->ap_paterno;
-        $institucion    = $user->nr_institucion;
+        
 
-        $insitucion     = Institucion::where('id','=',$institucion)->first();
-        $nm_institucion = $insitucion->nm_institucion;
+        $role       = Auth::user()->getRoleNames()->first();
 
-        $role           = $user->getRoleNames()->first();
 
-        $mensaje = "SISTEMA EN DESARROLLO";
+        switch($role)
+        {
+            case 'SUPER-ADMIN':
+                $destino = 'home';
+            break;
 
-        $notifications = $user->notifications()->latest()->take(5)->get();
+            case 'ADMIN':
+                $destino = 'users.page';
+            break;
 
-        return view('home')
-                ->with('nombre',$nombre)
-                ->with('nm_institucion',$nm_institucion)
-                ->with('role',$role)
-                ->with('notifications',$notifications)
-                ->with('mensaje',$mensaje);
+            case 'JEFE UNIDAD':
+                return 'pendiente';
+            break;
+
+
+            default:
+               
+            break;
+        }
+
+        return redirect()->route($destino);
+        
     }
 }
