@@ -22,11 +22,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        
-
         $role       = Auth::user()->getRoleNames()->first();
-
-
         switch($role)
         {
             case 'SUPER-ADMIN':

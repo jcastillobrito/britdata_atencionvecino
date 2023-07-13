@@ -6,6 +6,7 @@
 
 //import './bootstrap';
 import { createApp } from 'vue';
+
 import metodos from './metodosGlobales.js';
 
 /**
@@ -18,9 +19,6 @@ import metodos from './metodosGlobales.js';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
-
 
 // administrador
 import users from './components/admin/gestion_usuarios/users.vue';
@@ -29,6 +27,8 @@ app.component('users', users);
 import user_detalle from './components/admin/gestion_usuarios/user_detalle.vue';
 app.component('user_detalle', user_detalle);
 
+import servicios from './components/admin/servicios/servicios.vue';
+app.component('servicios', servicios); 
 
 // Funciones
 app.mixin(metodos);

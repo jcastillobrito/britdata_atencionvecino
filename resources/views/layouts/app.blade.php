@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css'])
+
 </head>
 <body class="nk-body bg-white npc-general pg-auth">
     <div id="app" class="nk-app-root">

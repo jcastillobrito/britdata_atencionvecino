@@ -14,6 +14,8 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
+
+
     <style>
         .sin-borde{
             border: none !important;
@@ -23,6 +25,7 @@
 
     <!-- Scripts -->
     @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css','resources/css/skins/theme-egyptian.css'])
+
 </head>
 <body class="nk-body bg-lighter npc-general has-sidebar" theme="dark">
     
@@ -63,5 +66,7 @@
     <!-- JavaScript -->
     <script src="{{asset('js/bundle.js?ver=3.1.3')}}"></script>
     <script src="{{asset('js/scripts.js?ver=3.1.3')}}"></script>
+
+
 </body>
 </html>

@@ -31,7 +31,8 @@ Route::group(['middleware' => ['role:ADMIN']], function ()
     Route::post('/user', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
 
     // Gestion Servicios
-    Route::get('/servicios', [App\Http\Controllers\ServiciosController::class, 'page'])->name('servicios.page');
+    Route::get('/services', [App\Http\Controllers\ServiciosController::class, 'page'])->name('servicios.page');
+    Route::get('/servicios/get', [App\Http\Controllers\ServiciosController::class, 'index'])->name('servicios.get');
 
 
 

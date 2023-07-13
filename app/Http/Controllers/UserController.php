@@ -37,7 +37,7 @@ class UserController extends Controller
     public function page()
     {
         $usuario = $this->Utils->SessionUser();
-        
+
         return view('users.users')
                 ->with('nombre'         ,$usuario['nombre'])
                 ->with('nm_institucion' ,$usuario['nm_institucion'])

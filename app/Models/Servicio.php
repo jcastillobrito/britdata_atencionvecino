@@ -9,7 +9,7 @@ class Servicio extends Model
 {
     use HasFactory;
     
-    protected $table = 'servicios';
+    protected $table    = 'services';
     
     protected $fillable = [
                             'nombre',
@@ -22,6 +22,21 @@ class Servicio extends Model
                             'nr_dias_plazo',
                             'descripcion_servicio'
                         ];
+
+    public function Users()
+    {
+        return $this->belongsToMany(User::class, 'user_services', 'id_services', 'id_user');
+    }
+
+    public function unidad()
+    {
+        return $this->belongsTo(Unidad::class, 'id_unidad');
+    }
+
+    public function depto()
+    {
+        return $this->belongsTo(Depto::class, 'id_depto');
+    }
 
     
     
