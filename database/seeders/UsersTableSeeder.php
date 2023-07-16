@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
 
         // Crear usuarios y asignar roles
 
+        //	10.433.795-3
         User::create([
             'nombres'           => 'Super ',
             'ap_paterno'        => 'Admin',

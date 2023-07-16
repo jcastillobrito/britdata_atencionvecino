@@ -4,7 +4,6 @@ export default {
 
       showToast(color, message) 
       {
-          console.log(color,message)
             toastr.options = {
               closeButton: true,
               progressBar: true,

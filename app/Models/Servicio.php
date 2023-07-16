@@ -23,10 +23,12 @@ class Servicio extends Model
                             'descripcion_servicio'
                         ];
 
-    public function Users()
+    public function usuarios()
     {
-        return $this->belongsToMany(User::class, 'user_services', 'id_services', 'id_user');
+        return $this->hasMany(ServiceUser::class, 'id_service');
     }
+
+    
 
     public function unidad()
     {

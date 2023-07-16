@@ -17,9 +17,12 @@ return new class extends Migration
             $table->id();
             $table->integer('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users');
-            $table->integer('id_services')->nullable()->unsigned();
-            $table->foreign('id_services')->references('id')->on('servicios');
+            $table->integer('id_service')->nullable()->unsigned();
+            $table->foreign('id_service')->references('id')->on('servicios');
             $table->tinyInteger('tp_activo')->default(1);
+            $table->tinyInteger('tp_respuesta_final')->default(1);
+            $table->tinyInteger('tp_derivacion')->default(1);
+            $table->tinyInteger('tp_responsable')->default(1);
             $table->timestamps();
         });
     }

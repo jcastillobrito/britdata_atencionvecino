@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('id_unidad')->nullable();
             $table->integer('id_depto')->nullable();
             $table->tinyInteger('tp_resp_automatica')->default(0);
+            $table->tinyInteger('tp_visto_bueno_jefatura')->default(0);
             $table->text('resp_automatica')->nullable();
             $table->tinyInteger('nr_dias_plazo')->nullable();
             $table->text('descripcion_servicio')->nullable();
