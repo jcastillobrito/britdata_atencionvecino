@@ -174,6 +174,7 @@ class ServiciosController extends Controller
         $servicios = Servicio::where('nr_institucion', $id_institucion)
                                 ->where('tp_activo', 1)
                                 ->with('usuarios.users.Unidad')
+                                ->withCount('usuarios')
                                 ->with('unidad')
                                 ->with('depto');
 

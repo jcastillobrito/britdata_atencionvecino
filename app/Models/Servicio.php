@@ -26,7 +26,7 @@ class Servicio extends Model
 
     public function usuarios()
     {
-        return $this->hasMany(ServiceUser::class, 'id_service');
+        return $this->hasMany(ServiceUser::class, 'id_service')->where('tp_activo', 1);
     }
 
     public function unidad()

@@ -18,7 +18,9 @@
         </thead>
         <tbody>
             <tr v-for="item in servicios">
-                <td>{{item.nombre}}  <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios.length === 0, 'bg-primary': item.usuarios.length > 0}" title="Cantidad Integrantes">{{item.usuarios.length }}</span></td>
+                <td>{{item.nombre}}  
+                    <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios_count === 0, 'bg-success': item.usuarios_count > 0}" title="Cantidad Integrantes">{{item.usuarios_count }}</span> 
+                </td>
                 <td>{{item.descripcion_servicio}} </td>
                 <td>{{item.unidad.nombre}}</td>
                 <td>{{item.depto.nombre}}</td>
@@ -48,7 +50,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">{{modal_title}}</h5>
+                <h5 class="modal-title">{{modal_title}} </h5> &nbsp; <span class="badge  rounded-pill" :class="{'bg-danger': tmp_user.length === 0, 'bg-info': tmp_user.length > 0}" title="Cantidad Integrantes">{{tmp_user.length }}</span>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body"> 
@@ -119,6 +121,7 @@ export default {
             select_users    : [],
   	        options_users   : [],
             tmp_service_id  : 0,
+            cant_participantes : 0
             
         }
     },
@@ -143,6 +146,9 @@ export default {
                     let resp = response.data;
                     me.showToast(resp.color,resp.msg)
                     me.getServicio(id_service)
+
+                    if(tp_status == 0)
+                        me.getServicios()
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -166,6 +172,7 @@ export default {
                     let resp = response.data;
                     me.showToast(resp.color,resp.msg)
                     me.getServicio(me.tmp_service_id)
+                    me.getServicios()
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -178,13 +185,9 @@ export default {
             if(texto.length <= 3)
                 return;
 
-            let lista_users  = me.tmp_user.filter(item => item.tp_activo == 1)
-            .map(item => item.id_user);
+            let lista_users  = me.filterUserActivos(me.tmp_user).map(item => item.id_user);
 
-            
-
-            axios.post('/servicios/get/users',
-            {'lista_users':lista_users,'texto':texto})
+            axios.post('/servicios/get/users',{'lista_users':lista_users,'texto':texto})
                 .then(function (response) 
                 {
                     let tmp_data = response.data;
@@ -206,17 +209,23 @@ export default {
             if(modal_activo == 'modal_responsables')
                 me.modal_title = 'Participantes'
         },
+        filterUserActivos(data)
+        {
+            return data.filter(item => item.tp_activo == 1)
+        },
         getServicio(id_servicio)
         {
             let me = this;
             axios.post('/servicios/get', {'id_servicio': id_servicio}).then(function (response) {
                     
                     let resp    = response.data.servicios
+                    console.log(resp)
                     if(resp.length > 0)
                         {
-                            me.tmp_user         = resp[0].usuarios;
-                            me.options_users    = []
-                            me.select_users     = []
+                            me.tmp_user             = me.filterUserActivos(resp[0].usuarios)
+                            me.cant_participantes   = me.tmp_user.length
+                            me.options_users        = []
+                            me.select_users         = []
                         }
 
                 })
