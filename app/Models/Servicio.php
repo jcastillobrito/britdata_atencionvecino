@@ -15,6 +15,7 @@ class Servicio extends Model
                             'nombre',
                             'nr_institucion',
                             'tp_activo',
+                            'tp_visible',
                             'id_unidad',
                             'id_depto',
                             'tp_resp_automatica',
@@ -27,8 +28,6 @@ class Servicio extends Model
     {
         return $this->hasMany(ServiceUser::class, 'id_service');
     }
-
-    
 
     public function unidad()
     {

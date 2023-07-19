@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('nr_institucion')->nullable()->unsigned();
             $table->foreign('nr_institucion')->references('id')->on('institucion');
             $table->tinyInteger('tp_activo')->default(1);
+            $table->tinyInteger('tp_visible')->default(1);
             $table->integer('id_unidad')->nullable();
             $table->integer('id_depto')->nullable();
             $table->tinyInteger('tp_resp_automatica')->default(0);

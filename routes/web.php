@@ -32,9 +32,10 @@ Route::group(['middleware' => ['role:ADMIN']], function ()
 
     // Gestion Servicios
     Route::get('/services', [App\Http\Controllers\ServiciosController::class, 'page'])->name('servicios.page');
-    Route::get('/servicios/get', [App\Http\Controllers\ServiciosController::class, 'index'])->name('servicios.get');
+    Route::post('/servicios/get', [App\Http\Controllers\ServiciosController::class, 'index'])->name('servicios.get');
     Route::post('/servicios/get/users', [App\Http\Controllers\ServiciosController::class, 'service_users'])->name('servicios.get.user');
-    Route::post('/servicios/insert/participante', [App\Http\Controllers\ServiciosController::class, 'service_users_store'])->name('servicios.post.user');
+    Route::post('/servicios/insert/participante', [App\Http\Controllers\ServiciosController::class, 'service_users_store'])->name('servicios.insert.user');
+    Route::post('/servicios/edit/participante', [App\Http\Controllers\ServiciosController::class, 'service_users_edit'])->name('servicios.edit.user');
     
 
 

@@ -24,6 +24,62 @@ class ServiciosController extends Controller
         
     }
 
+    public function service_users_edit(Request $request)
+    {
+        $tp_status = $request->tp_status;
+        $id_user   = $request->id_user;
+        $old_status = $request->old_status;
+        $tp_status = $request->tp_status;
+        $id_service = $request->id_service;
+
+        $msg = 'Usuario editado correctamente';
+        
+
+        $array_status     = [
+                                'tp_activo',
+                                'tp_respuesta_final',
+                                'tp_derivacion',
+                                'tp_responsable',
+                            ];
+
+        $new_value = $old_status  ? 0 : 1;
+
+        if($array_status[$tp_status] == 'tp_activo' && $new_value == 0)
+        {
+            $contar_users = ServiceUser::where('id_service','=',$id_service)->where('tp_activo','=',1)->count();
+
+            if($contar_users == 1)
+                {
+                    $msg = 'El servicio dejará de ser visible al público';
+                    Servicio::where('id','=',$id_service)->update(['tp_visible' => 0]);
+                }
+
+            $msg = 'Usuario eliminado correctamente';
+        }
+        
+
+        if($array_status[$tp_status] == 'tp_responsable' && $new_value == 0)
+        {
+            $contar_users = ServiceUser::where('id_service','=',$id_service)->where('tp_responsable','=',1)->count();
+
+            if($contar_users == 1)
+                return['msg' => 'El servicio debe tener al menos un responsable','color'=>'error'];
+        }
+
+        if($array_status[$tp_status] == 'tp_respuesta_final' && $new_value == 0)
+        {
+            $contar_users = ServiceUser::where('id_service','=',$id_service)->where('tp_respuesta_final','=',1)->count();
+            
+            if($contar_users == 1)
+                return['msg' => 'El servicio debe tener al menos una persona que responda al vecino','color'=>'error'];
+        }
+        
+        ServiceUser::where('id_service','=',$id_service)->where('id_user','=',$id_user)->update([$array_status[$tp_status] => $new_value]);
+
+        return['msg' => $msg,'color'=>'warning'];
+
+    }
+
     public function service_users_store(Request $request)
     {
         $id_user    = $request->id_user;
@@ -76,46 +132,48 @@ class ServiciosController extends Controller
         $id_institucion = $this->Utils->SessionUser()['id_institucion'];
 
 
-        //concatena nombres ap_paterno y ap_materno en un select orm de laravel
-
-
-        $participantes = User::select('id as value')->selectRaw('CONCAT(nombres," ",ap_paterno," ",ap_materno) as label')
-                        
-                        ->where('nr_institucion', $id_institucion)
-                        ->where('tp_activo', 1)
-                        ->whereNotIn('id', $lista_users)
-                        // usando spatie como filtro quienes tengan cierto roles
-                        ->whereHas('roles', function ($query) {
+        $participantes = User::select('users.id as value', 'users.id', 'nr_unidad')
+                        ->selectRaw('CONCAT(nombres, " ", ap_paterno, " ", " - ", unidad.nombre) as label')
+                        ->join('unidad', 'users.nr_unidad', '=', 'unidad.id') // Agregar un join con la tabla "unidad"
+                        ->where('users.nr_institucion', $id_institucion)
+                        ->where('users.tp_activo', 1)
+                        ->whereNotIn('users.id', $lista_users)
+                        ->whereHas('roles', function ($query) 
+                        {
                             $query->where('name', '=', 'ADMIN')
-                                    ->orWhere('name', '=', 'JEFE UNIDAD')
-                                    ->orWhere('name', '=', 'JEFE DEPTO')
-                                    ->orWhere('name', '=', 'JEFE SECCION')
-                                    ->orWhere('name', '=', 'COLABORADOR');
+                                ->orWhere('name', '=', 'JEFE UNIDAD')
+                                ->orWhere('name', '=', 'JEFE DEPTO')
+                                ->orWhere('name', '=', 'JEFE SECCION')
+                                ->orWhere('name', '=', 'COLABORADOR');
                         })
                         ->where(function ($query) use ($texto) {
                             $query->orWhere('ap_paterno', 'LIKE', '%' . $texto . '%')
-                                    ->orWhere('ap_materno', 'LIKE', '%' . $texto . '%')
-                                    ->orWhere('nombres', 'LIKE', '%' . $texto . '%');
+                                ->orWhere('ap_materno', 'LIKE', '%' . $texto . '%')
+                                ->orWhere('nombres', 'LIKE', '%' . $texto . '%');
                         })
                         ->get();
+
 
         return['participantes' => $participantes];
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $usuario = $this->Utils->SessionUser();
+        $id_servicio    = $request->id_servicio;
+        $usuario        = $this->Utils->SessionUser();
         $id_institucion = $usuario['id_institucion'];
 
         $servicios = Servicio::where('nr_institucion', $id_institucion)
                                 ->where('tp_activo', 1)
-                                ->with('usuarios.users')
+                                ->with('usuarios.users.Unidad')
                                 ->with('unidad')
-                                ->with('depto')
-                                ->get();
+                                ->with('depto');
 
-        return['servicios' => $servicios];
+        if($id_servicio)
+            $servicios = $servicios->where('id', $id_servicio);
+
+        return['servicios' => $servicios->get()];
     }
 
     public function page()
