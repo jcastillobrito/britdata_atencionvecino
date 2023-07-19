@@ -26,13 +26,14 @@ class ServiciosController extends Controller
 
     public function service_users_edit(Request $request)
     {
-        $tp_status = $request->tp_status;
-        $id_user   = $request->id_user;
+        $tp_status  = $request->tp_status;
+        $id_user    = $request->id_user;
         $old_status = $request->old_status;
-        $tp_status = $request->tp_status;
+        $tp_status  = $request->tp_status;
         $id_service = $request->id_service;
 
-        $msg = 'Usuario editado correctamente';
+        $msg        = 'Usuario editado correctamente';
+        $color      = 'success';
         
 
         $array_status     = [
@@ -50,11 +51,11 @@ class ServiciosController extends Controller
 
             if($contar_users == 1)
                 {
-                    $msg = 'El servicio dejará de ser visible al público';
+                    $msg    = 'Usuario eliminado correctamente,el servicio dejará de ser visible al público';
+                    $color  = 'warning';
                     Servicio::where('id','=',$id_service)->update(['tp_visible' => 0]);
                 }
 
-            $msg = 'Usuario eliminado correctamente';
         }
         
 
@@ -63,7 +64,7 @@ class ServiciosController extends Controller
             $contar_users = ServiceUser::where('id_service','=',$id_service)->where('tp_responsable','=',1)->count();
 
             if($contar_users == 1)
-                return['msg' => 'El servicio debe tener al menos un responsable','color'=>'error'];
+                return['msg' => 'El servicio debe tener al menos un responsable','color'=>'warning'];
         }
 
         if($array_status[$tp_status] == 'tp_respuesta_final' && $new_value == 0)
@@ -71,12 +72,12 @@ class ServiciosController extends Controller
             $contar_users = ServiceUser::where('id_service','=',$id_service)->where('tp_respuesta_final','=',1)->count();
             
             if($contar_users == 1)
-                return['msg' => 'El servicio debe tener al menos una persona que responda al vecino','color'=>'error'];
+                return['msg' => 'El servicio debe tener al menos una persona que responda al vecino','color'=>'warning'];
         }
         
         ServiceUser::where('id_service','=',$id_service)->where('id_user','=',$id_user)->update([$array_status[$tp_status] => $new_value]);
 
-        return['msg' => $msg,'color'=>'warning'];
+        return['msg' => $msg,'color'=>$color];
 
     }
 
@@ -86,15 +87,21 @@ class ServiciosController extends Controller
         $id_service = $request->id_service;
 
 
-        $cantidad = ServiceUser::where('id_service', $id_service)->count();
+        $cantidad   = ServiceUser::where('id_service', $id_service)->count();
 
-        $valida = ServiceUser::where('id_user', $id_user)
+        $valida     = ServiceUser::where('id_user', $id_user)
                                 ->where('id_service', $id_service)
+                                ->where('tp_activo', 1)
                                 ->count();
-
 
         if($valida)
             return['msg' => 'El usuario ya se encuentra en el servicio','color'=>'error'];
+
+
+        ServiceUser::where('id_user', $id_user)
+            ->where('id_service', $id_service)
+            ->where('tp_activo', 0)
+            ->delete();
 
 
         if($cantidad ==  0)

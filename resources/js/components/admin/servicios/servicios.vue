@@ -178,9 +178,10 @@ export default {
             if(texto.length <= 3)
                 return;
 
-            let lista_users = me.tmp_user.map(function(item) {
-                return item.id_user;
-            });
+            let lista_users  = me.tmp_user.filter(item => item.tp_activo == 1)
+            .map(item => item.id_user);
+
+            
 
             axios.post('/servicios/get/users',
             {'lista_users':lista_users,'texto':texto})
