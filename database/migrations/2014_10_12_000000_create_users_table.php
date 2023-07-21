@@ -28,7 +28,6 @@ return new class extends Migration
             $table->dateTime('last_login')->nullable();
             //crea clave foranea con la tabla instituciones
             $table->foreign('nr_institucion')->references('id')->on('institucion');
-
             //Infraestructura municipal
             $table->integer('nr_unidad')->nullable()->unsigned();
             $table->integer('nr_depto')->nullable()->unsigned();
