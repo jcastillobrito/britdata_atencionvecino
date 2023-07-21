@@ -86,7 +86,7 @@ class ServiciosController extends Controller
         $id_user    = $request->id_user;
         $id_service = $request->id_service;
 
-        $cantidad   = ServiceUser::where('id_service', $id_service)->count();
+        $cantidad   = ServiceUser::where('id_service', $id_service)->where('tp_activo', 1)->count();
 
         $valida     = ServiceUser::where('id_user', $id_user)
                                 ->where('id_service', $id_service)
