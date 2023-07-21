@@ -60,7 +60,7 @@
                                 <div class="ms-2 me-auto">
                                     <div class="fw-bold">{{user.users.nombres+' '+user.users.ap_paterno+' '+user.users.ap_materno}}
                                     </div>
-                                    <span v-if="user.users.unidad">{{ user.users.unidad.nombre}}</span> <br>
+                                    <span v-if="user.users.depto">{{ user.users.depto.nombre}}</span> <br>
                                     <i v-if="user.users.email">{{ user.users.email}}</i>
                                 </div>
                                 <button @click="changeStatus(user.id_user,3,user.tp_responsable,user.id_service)" class="btn btn-xs btn-success mx-1" :class="user.tp_responsable == 1? 'btn-success':'btn-danger'" title="Responsable de Servicio">

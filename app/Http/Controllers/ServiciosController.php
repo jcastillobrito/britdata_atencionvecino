@@ -136,9 +136,9 @@ class ServiciosController extends Controller
         $nr_unidad      = $request->nr_unidad;
 
 
-        $participantes = User::select('users.id as value', 'users.id', 'nr_unidad')
-                        ->selectRaw('CONCAT(nombres, " ", ap_paterno, " ", " - ", unidad.nombre) as label')
-                        ->join('unidad', 'users.nr_unidad', '=', 'unidad.id') // Agregar un join con la tabla "unidad"
+        $participantes = User::select('users.id as value', 'users.id', 'users.nr_unidad','users.nr_depto')
+                        ->selectRaw('CONCAT(nombres, " ", ap_paterno, " ", " - ", depto.nombre) as label')
+                        ->join('depto', 'users.nr_depto', '=', 'depto.id') // Agregar un join con la tabla "unidad"
                         ->where('users.nr_institucion', $id_institucion)
                         ->where('users.tp_activo', 1)
                         ->where('users.nr_unidad', $nr_unidad)
@@ -165,13 +165,12 @@ class ServiciosController extends Controller
 
         $servicios_all = Servicio::where('nr_institucion', $id_institucion)
                                 ->where('tp_activo', 1)
-                                ->with('usuarios.users.Unidad')
                                 ->withCount('usuarios')
                                 ->with('unidad')
                                 ->with('depto');
 
         if($id_servicio)
-            return ['servicios' => $servicios_all->where('id', $id_servicio)->first()];
+            return ['servicios' => $servicios_all->where('id', $id_servicio)->with('usuarios.users.depto')->first()];
 
         return['servicios' => $servicios_all->get()];
     }

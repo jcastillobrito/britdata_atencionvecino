@@ -40,7 +40,7 @@ class UserFactory extends Factory
             'nr_institucion'    => 1,
             'last_login'        => $this->faker->optional()->dateTimeThisYear(),
             'nr_unidad'         => $this->faker->numberBetween(1, 12),
-            'nr_depto'          => $this->faker->optional()->randomNumber(2),
+            'nr_depto'          => $this->faker->numberBetween(1,24),
             'nr_seccion'        => $this->faker->optional()->randomNumber(2),
             'tp_activo'         => $this->faker->boolean(80), // 80% de probabilidad de ser activo.
             'remember_token'    => Str::random(10),
