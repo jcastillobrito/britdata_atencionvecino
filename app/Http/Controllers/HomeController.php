@@ -23,6 +23,10 @@ class HomeController extends Controller
     public function index()
     {
         $role       = Auth::user()->getRoleNames()->first();
+        //Auth::logout();             
+        //return redirect()->back();
+
+       
         switch($role)
         {
             case 'SUPER-ADMIN':
@@ -39,9 +43,12 @@ class HomeController extends Controller
 
 
             default:
-               
+                Auth::logout();             
+                return redirect()->back();
             break;
         }
+
+        $destino ='users.page';
 
         return redirect()->route($destino);
         

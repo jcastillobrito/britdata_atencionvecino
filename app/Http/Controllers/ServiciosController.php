@@ -86,7 +86,6 @@ class ServiciosController extends Controller
         $id_user    = $request->id_user;
         $id_service = $request->id_service;
 
-
         $cantidad   = ServiceUser::where('id_service', $id_service)->count();
 
         $valida     = ServiceUser::where('id_user', $id_user)
@@ -122,8 +121,6 @@ class ServiciosController extends Controller
             'id_service'            => $id_service
         ];
 
-
-
         ServiceUser::create($tmp_user);
 
 
@@ -135,8 +132,8 @@ class ServiciosController extends Controller
     public function service_users(Request $request)
     {
         $lista_users    = $request->lista_users;
-        $texto          = $request->texto;
         $id_institucion = $this->Utils->SessionUser()['id_institucion'];
+        $nr_unidad      = $request->nr_unidad;
 
 
         $participantes = User::select('users.id as value', 'users.id', 'nr_unidad')
@@ -144,6 +141,7 @@ class ServiciosController extends Controller
                         ->join('unidad', 'users.nr_unidad', '=', 'unidad.id') // Agregar un join con la tabla "unidad"
                         ->where('users.nr_institucion', $id_institucion)
                         ->where('users.tp_activo', 1)
+                        ->where('users.nr_unidad', $nr_unidad)
                         ->whereNotIn('users.id', $lista_users)
                         ->whereHas('roles', function ($query) 
                         {
@@ -152,13 +150,7 @@ class ServiciosController extends Controller
                                 ->orWhere('name', '=', 'JEFE DEPTO')
                                 ->orWhere('name', '=', 'JEFE SECCION')
                                 ->orWhere('name', '=', 'COLABORADOR');
-                        })
-                        ->where(function ($query) use ($texto) {
-                            $query->orWhere('ap_paterno', 'LIKE', '%' . $texto . '%')
-                                ->orWhere('ap_materno', 'LIKE', '%' . $texto . '%')
-                                ->orWhere('nombres', 'LIKE', '%' . $texto . '%');
-                        })
-                        ->get();
+                        })->get();
 
 
         return['participantes' => $participantes];
@@ -171,7 +163,7 @@ class ServiciosController extends Controller
         $usuario        = $this->Utils->SessionUser();
         $id_institucion = $usuario['id_institucion'];
 
-        $servicios = Servicio::where('nr_institucion', $id_institucion)
+        $servicios_all = Servicio::where('nr_institucion', $id_institucion)
                                 ->where('tp_activo', 1)
                                 ->with('usuarios.users.Unidad')
                                 ->withCount('usuarios')
@@ -179,9 +171,9 @@ class ServiciosController extends Controller
                                 ->with('depto');
 
         if($id_servicio)
-            $servicios = $servicios->where('id', $id_servicio);
+            return ['servicios' => $servicios_all->where('id', $id_servicio)->first()];
 
-        return['servicios' => $servicios->get()];
+        return['servicios' => $servicios_all->get()];
     }
 
     public function page()

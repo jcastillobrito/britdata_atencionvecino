@@ -11,7 +11,6 @@
                 <th>Unidad</th>
                 <th>Depto</th>
                 <th>Respuesta Automatica</th>
-                <th>Visto Bueno Jefatura</th>
                 <th>Estado</th>
                 <th>Opciones</th>
             </tr>
@@ -24,8 +23,7 @@
                 <td>{{item.descripcion_servicio}} </td>
                 <td>{{item.unidad.nombre}}</td>
                 <td>{{item.depto.nombre}}</td>
-                <td> -</td>
-                <td> - </td>               
+                <td>{{ item.tp_resp_automatica ? 'Si' : 'No' }} </td>
                 <td>{{ item.tp_activo ? 'Habilitado' : 'Desactivado' }}</td>
                 <td>
                     <button @click="showModal('#modal_generico',item,'modal_responsables')" title="Responsables" class="btn btn-xs btn-primary">
@@ -81,7 +79,6 @@
                     <VueMultiselect 
                         class="mt-3"
                         v-model="select_users"
-                        @search-change="asyncUsers"
                         :options="options_users"
                         track-by="value"
                         placeholder="Buscar Participante"
@@ -114,21 +111,23 @@ import VueMultiselect from 'vue-multiselect'
 export default {
     data() {
         return {
-            servicios       : [],
-            modal_title     : '',
-            modal_activo    : '',
-            tmp_user        : [],
-            select_users    : [],
-  	        options_users   : [],
-            tmp_service_id  : 0,
-            cant_participantes : 0
+
+            servicios           : [],
+            modal_title         : '',
+            modal_activo        : '',
+            tmp_user            : [],
+            select_users        : [],
+            options_users       : [],
+            tmp_service         : [],
+            cant_participantes  : 0
             
         }
     },
     components: {
         VueMultiselect 
     },
-    methods: {
+    methods: 
+    {
         changeStatus(id_user_service = 0, tp_status,old_status = 0,id_service)
         {
             let me = this
@@ -165,31 +164,29 @@ export default {
             axios.post('/servicios/insert/participante',
                     {
                         'id_user'       :me.select_users.value,
-                        'id_service'    :me.tmp_service_id,
+                        'id_service'    :me.tmp_service.id,
                     })
                 .then(function (response) 
                 {
                     let resp = response.data;
                     me.showToast(resp.color,resp.msg)
-                    me.getServicio(me.tmp_service_id)
+                    me.getServicio(me.tmp_service.id)
                     me.getServicios()
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
-        asyncUsers(texto)
+        asyncUsers(nr_unidad)
         {
-            let me = this;
+            let me              = this;
+            let lista_users     = me.filterUserActivos(me.tmp_user).map(item => item.id_user);
 
-            if(texto.length <= 3)
-                return;
-
-            let lista_users  = me.filterUserActivos(me.tmp_user).map(item => item.id_user);
-
-            axios.post('/servicios/get/users',{'lista_users':lista_users,'texto':texto})
-                .then(function (response) 
+            axios.post('/servicios/get/users',
+            {'lista_users':lista_users,'nr_unidad':nr_unidad})
+                .then(function (response)  
                 {
+                    console.log(response.data)
                     let tmp_data = response.data;
                     me.options_users = tmp_data.participantes
                 })
@@ -204,7 +201,8 @@ export default {
             let me              = this
             me.modal_activo     = modal_activo;
             me.getServicio(data.id)
-            me.tmp_service_id   = data.id
+            
+
 
             if(modal_activo == 'modal_responsables')
                 me.modal_title = 'Participantes'
@@ -217,21 +215,19 @@ export default {
         {
             let me = this;
             axios.post('/servicios/get', {'id_servicio': id_servicio}).then(function (response) {
-                    
-                    let resp    = response.data.servicios
-                    console.log(resp)
-                    if(resp.length > 0)
-                        {
-                            me.tmp_user             = me.filterUserActivos(resp[0].usuarios)
-                            me.cant_participantes   = me.tmp_user.length
-                            me.options_users        = []
-                            me.select_users         = []
-                        }
+                
+                me.tmp_service          = response.data.servicios
+                me.tmp_user             = me.filterUserActivos(me.tmp_service.usuarios)
+                me.cant_participantes   = me.tmp_user.length
+                me.options_users        = []
+                me.select_users         = []
 
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                me.asyncUsers(me.tmp_service.nr_unidad)
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         getServicios()
         {

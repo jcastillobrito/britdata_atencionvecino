@@ -33,19 +33,17 @@
     
     <div class="card-inner">
         <div class="nk-block-between-md g-3">
-            <div class="g">
-                <ul class="pagination justify-content-center justify-content-md-start">
-                    <li class="page-item" v-if="pagination.current_page > 1">
-                        <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
-                    </li>
-                    <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                        <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
-                    </li>
-                    <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                        <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
-                    </li>
-                </ul><!-- .pagination -->
-            </div>
+            <ul class="pagination justify-content-center justify-content-md-start">
+                <li class="page-item" v-if="pagination.current_page > 1">
+                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                </li>
+                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                </li>
+                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
+                </li>
+            </ul><!-- .pagination -->
             
         </div><!-- .nk-block-between -->
     </div>
@@ -195,21 +193,16 @@ export default {
             me.orderBy = order;
             me.getUsers()
         },
-        setShow(cant)
-        {
-            let me = this;
-            me.nr_show = cant
-            me.getUsers()
-        },
+        
         cambiarPagina(page)
         {
             let me = this;
             me.pagination.current_page = page;
-            me.getUsers(page,cant);
+            me.getUsers(page);
         },
         getUsers() {
             let me = this;
-            let ruta = '/users?page=' + me.pagination.current_page+'&cant='+me.nr_show+'&orderBy='+me.orderBy+'&criterio='+me.criterio+'&busqueda='+me.busqueda;
+            let ruta = '/users?page=' + me.pagination.current_page+'&cant=15'+'&orderBy='+me.orderBy+'&criterio='+me.criterio+'&busqueda='+me.busqueda;
 
             axios.get(ruta)
                 .then(response => 
