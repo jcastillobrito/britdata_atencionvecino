@@ -16,8 +16,8 @@ class Servicio extends Model
                             'nr_institucion',
                             'tp_activo',
                             'tp_visible',
-                            'id_unidad',
-                            'id_depto',
+                            'nr_unidad',
+                            'nr_depto',
                             'tp_resp_automatica',
                             'resp_automatica',
                             'nr_dias_plazo',
@@ -31,12 +31,12 @@ class Servicio extends Model
 
     public function unidad()
     {
-        return $this->belongsTo(Unidad::class, 'id_unidad');
+        return $this->belongsTo(Unidad::class, 'nr_unidad');
     }
 
     public function depto()
     {
-        return $this->belongsTo(Depto::class, 'id_depto');
+        return $this->belongsTo(Depto::class, 'nr_depto');
     }
 
     

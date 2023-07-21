@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreign('nr_institucion')->references('id')->on('institucion');
             $table->tinyInteger('tp_activo')->default(1);
             $table->tinyInteger('tp_visible')->default(1);
-            $table->integer('id_unidad')->nullable();
-            $table->integer('id_depto')->nullable();
+            $table->integer('nr_unidad')->nullable();
+            $table->integer('nr_depto')->nullable();
             $table->tinyInteger('tp_resp_automatica')->default(0);
             $table->tinyInteger('tp_visto_bueno_jefatura')->default(0);
             $table->text('resp_automatica')->nullable();
