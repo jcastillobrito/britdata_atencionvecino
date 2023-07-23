@@ -32,7 +32,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         $id                 = $request->id_user;
-        $user               = User::where('id','=',$id)->update(['tp_activo'=>0]);
+        $user               = User::findOrFail($id)->update(['tp_activo'=>0]);
         return ['error'=>0,'color'=>'success','msg'=>'Usuario inhabilitado correctamente'];
     }
 

@@ -8,12 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable,HasRoles,AuditableTrait;
 
+    protected $guarded = [];
     
     protected $fillable = [
         'password',
@@ -29,6 +32,7 @@ class User extends Authenticatable
         'last_login',
         'nr_unidad',
         'nr_depto',
+        'tp_activo',
     ];
 
     /**
@@ -40,6 +44,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+ 
 
     /**
      * The attributes that should be cast.
