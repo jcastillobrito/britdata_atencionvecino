@@ -23,7 +23,7 @@ class JerarquiaController extends Controller
                                     ->where('nr_institucion','=',$nr_institucion)
                                     ->get();
 
-        $roles = Role::select('name','id')->get();
+        $roles = Role::select('name','id')->where('id','!=',1)->get();
 
         return [
             'unidades' => $unidades,

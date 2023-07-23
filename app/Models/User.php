@@ -23,13 +23,12 @@ class User extends Authenticatable
         'nr_rut',
         'id_externo',
         'email',
-        'celular',
+        'telefono',
         'email',
         'nr_institucion',
         'last_login',
         'nr_unidad',
         'nr_depto',
-        'nr_seccion',
     ];
 
     /**

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nr_rut',20)->unique();
             $table->string('id_externo')->nullable();
             $table->string('email')->unique();
-            $table->string('celular')->unique();
+            $table->string('telefono')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('nr_institucion')->nullable()->unsigned();
@@ -31,7 +31,6 @@ return new class extends Migration
             //Infraestructura municipal
             $table->integer('nr_unidad')->nullable()->unsigned();
             $table->integer('nr_depto')->nullable()->unsigned();
-            $table->integer('nr_seccion')->nullable()->unsigned();
             
             $table->tinyInteger('tp_activo')->default(1);
             $table->rememberToken();

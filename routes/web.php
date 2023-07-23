@@ -26,7 +26,7 @@ Route::group(['middleware' => ['role:ADMIN']], function ()
 {
     //Gestion usuarios
     Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'page'])->name('users.page');
-    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.get');
+    Route::post('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.get');
     Route::put('/user', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::post('/user', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
 

@@ -118,10 +118,19 @@ class UserController extends Controller
         $user           = auth()->user();
         $nr_institucion = $user->nr_institucion;
         $cant           = $request->cant;
-        $criterio       = $request->criterio;
-        $busqueda       = $request->busqueda;
-        $orderBy       = $request->orderBy;
-        
+        $filtros        = $request->filtros;
+
+        //filtros
+        $unidad         = $filtros['unidad'];
+        $depto          = $filtros['depto'];
+        $rut            = $filtros['rut'];
+        $nombres        = $filtros['nombres'];
+        $ap_paterno     = $filtros['ap_paterno'];
+        $ap_materno     = $filtros['ap_materno'];
+        $email          = $filtros['email'];
+        $telefono       = $filtros['telefono'];
+        $rol            = $filtros['rol'];
+
         $users = User::select('password',
                             'nombres',
                             'ap_paterno',
@@ -129,7 +138,7 @@ class UserController extends Controller
                             'nr_rut',
                             'id_externo',
                             'email',
-                            'celular',
+                            'telefono',
                             'tp_activo',
                             'email',
                             'nr_institucion',
@@ -140,12 +149,40 @@ class UserController extends Controller
                         ->selectRaw('DATE_FORMAT(last_login,"%d-%m-%Y %H:%i") as last_login')
                         ->with('Unidad')
                         ->with('Depto')
-                        ->where('nr_institucion','=',$nr_institucion)->with('roles');
-                        //->orderBy($criterio,$orderBy);
+                        ->where('nr_institucion','=',$nr_institucion)
+                        ->with('roles');
 
-        if($busqueda != '')
-            $users = $users->where($criterio,'like','%'.$busqueda.'%');
+        if($unidad != 0)
+            $users = $users->where('nr_unidad','=',$unidad);
 
+        if($depto != 0)
+            $users = $users->where('nr_depto','=',$depto);
+
+        if($rut != '')
+            $users = $users->where('nr_rut','like','%'.$rut.'%');
+
+        if($nombres != '')
+            $users = $users->where('nombres','like','%'.$nombres.'%');
+
+        if($ap_paterno != '')
+            $users = $users->where('ap_paterno','like','%'.$ap_paterno.'%');
+        
+        if($ap_materno != '')
+            $users = $users->where('ap_materno','like','%'.$ap_materno.'%');
+
+        if($email != '')
+            $users = $users->where('email','like','%'.$email.'%');
+
+        if($telefono != '')
+            $users = $users->where('telefono','like','%'.$telefono.'%');
+
+       //si viene el filtro de rol filtra los usuarios por el rol, considera que son roles de spatie y como dato es el id
+        if($rol != 0)
+            $users = $users->whereHas('roles', function ($query) use ($rol) 
+            {
+                $query->where('id', '=', $rol);
+            });
+        
         $users = $users->paginate($cant);
 
         return [
