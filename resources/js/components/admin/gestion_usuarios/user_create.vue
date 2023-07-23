@@ -70,8 +70,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="default-01">Teléfono</label>
                                 <div class="form-control-wrap">
-                                    <input  v-model="celular" type="number" maxlength="9" class="form-control" placeholder="Ingrese Celular">
-                                    <small class="text-danger" v-if="errors.celular">{{ errors.celular[0] }}</small>
+                                    <input  v-model="telefono" type="number" maxlength="9" class="form-control" placeholder="Ingrese telefono">
+                                    <small class="text-danger" v-if="errors.telefono">{{ errors.telefono[0] }}</small>
 
                                 </div>
                             </div>
@@ -169,7 +169,7 @@ export default {
             nr_rol      :   1,
             id_externo  :   '',
             tp_activo   :   1,
-            celular     :   '',
+            telefono     :   '',
             nombres      :   '',
             ap_paterno  :   '',
             ap_materno  :   '',
@@ -209,7 +209,7 @@ export default {
                 nr_rol      : me.nr_rol,
                 tp_activo   : me.tp_activo,
                 id_externo  : me.id_externo,
-                celular     : me.celular,
+                telefono    : me.telefono,
                 nombres     : me.nombres,
                 ap_paterno  : me.ap_paterno,
                 ap_materno  : me.ap_materno,
@@ -221,10 +221,11 @@ export default {
             axios.post('/user',user_tmp)
             .then(function (response) 
             {
-               let resp = response
-               this.showToast(resp.color,resp.m)
+               let resp = response.data
+               me.showToast(resp.color,resp.msg)
 
             }).catch(function (error) {
+                console.log(error)
                  if(error && error.response.status == 422)
                     {
                         me.showToast('error','Favor revisar Formulario')

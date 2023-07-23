@@ -157,7 +157,8 @@ class UserController extends Controller
                         ->with('Depto')
                         ->where('nr_institucion','=',$nr_institucion)
                         ->where('tp_activo','=',1)
-                        ->with('roles');
+                        ->with('roles')
+                        ->orderBy('created_at','desc');
 
         if($unidad != 0)
             $users = $users->where('nr_unidad','=',$unidad);
