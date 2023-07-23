@@ -1,161 +1,194 @@
 <template>
 
-    <div id="accordion" class="accordion">
-        <div class="accordion-item">
-            <a href="#" class="accordion-head" data-bs-toggle="collapse" data-bs-target="#accordion-item-1">
-                <h5 class="card-title">Filtros</h5>
-                <span class="accordion-icon"></span>
-            </a>
-            <div class="accordion-body collapse" id="accordion-item-1" data-bs-parent="#accordion">
-                <div class="accordion-inner">
-                    <div class="row">
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="rut">Rut</label>
-                                    <input v-model="filtros.rut" class="form-control" type="text" id="rut">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="unidad">Unidad</label>
-                                <select v-model="filtros.unidad" name="" id="unidad" class="form-control">
-                                    <option value="0">Seleccionar Unidad</option>
-                                    <option v-for="item in init.unidades" :value="item.id" :key="item.id">{{ item.nombre }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="depto">Depto</label>
-                                <select v-model="filtros.depto"  id="depto" class="form-control">
-                                    <option value="0">Seleccionar Depto</option>
-                                    <option :key="item.id" v-for="item in init.deptos" :value="item.id">{{ item.nombre }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="nombre">Nombre</label>
-                                <input v-model="filtros.nombre" id="nombre" class="form-control" type="text" >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label  for="ap_paterno">Apellido Paterno</label>
-                                <input v-model="filtros.ap_paterno" class="form-control" id="ap_paterno" type="text" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ap_materno">Apellido Materno</label>
-                                <input v-model="filtros.ap_materno" class="form-control" id="ap_materno" type="text" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input v-model="filtros.email" class="form-control" id="email" type="text" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="telefono">Telefono</label>
-                                <input v-model="filtros.telefono" class="form-control" id="telefono" type="text" >
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row mt-2">
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label  for="rol">Rol</label>
-                                <select v-model="filtros.rol"  id="rol" class="form-control">
-                                    <option value="0">Seleccionar Rol</option>
-                                    <option :key="item.id" v-for="item in init.roles" :value="item.id">{{ item.name }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="" style="visibility: hidden;">Search</label>
-                                <button @click="getUsers()" class="btn btn-block btn-sm btn-primary form-control" > Buscar </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-    </div>
-</div>
-
-    <div class="card card-bordered mt-2">
+    <div class="card card-bordered card-preview">
         <div class="card-inner">
-            <h5 class="card-title ">Usuarios 
-                <button @click="showModal(2)" class="btn btn-sm btn-success" style="float:right">
-                    Crear Usuario
-                </button>
-            </h5>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5">
+                    <em class="icon ni ni-user"></em><span>Usuarios</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tabItem6">
+                    <em class="icon ni ni-growth"></em><span>Métricas</span>
+                    </a>
+                </li>
+                
+            </ul>
 
-            <table class="table table-sm table-bordered mt-2">
-                <thead class="bg-primary text-white text-center" style="border: 1px solid white">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabItem5">
+
+                    <div id="accordion" class="accordion">
+                        <div class="accordion-item">
+                            <a href="#" class="accordion-head bg-primary text-white" data-bs-toggle="collapse" data-bs-target="#accordion-item-1">
+                                <h5 class="card-title">Filtros</h5>
+                                <span class="accordion-icon text-white"></span>
+                            </a>
+                            <div class="accordion-body collapse" id="accordion-item-1" data-bs-parent="#accordion">
+                                <div class="accordion-inner">
+                                    <div class="row">
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="rut">Rut</label>
+                                                    <input v-model="filtros.rut" class="form-control" type="text" id="rut">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="unidad">Unidad</label>
+                                                <select v-model="filtros.unidad" name="" id="unidad" class="form-control">
+                                                    <option value="0">Seleccionar Unidad</option>
+                                                    <option v-for="item in init.unidades" :value="item.id" :key="item.id">{{ item.nombre }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="depto">Depto</label>
+                                                <select v-model="filtros.depto"  id="depto" class="form-control">
+                                                    <option value="0">Seleccionar Depto</option>
+                                                    <option :key="item.id" v-for="item in init.deptos" :value="item.id">{{ item.nombre }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="nombre">Nombre</label>
+                                                <input v-model="filtros.nombre" id="nombre" class="form-control" type="text" >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label  for="ap_paterno">Apellido Paterno</label>
+                                                <input v-model="filtros.ap_paterno" class="form-control" id="ap_paterno" type="text" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="ap_materno">Apellido Materno</label>
+                                                <input v-model="filtros.ap_materno" class="form-control" id="ap_materno" type="text" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input v-model="filtros.email" class="form-control" id="email" type="text" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="telefono">Telefono</label>
+                                                <input v-model="filtros.telefono" class="form-control" id="telefono" type="text" >
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-2">
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label  for="rol">Rol</label>
+                                                <select v-model="filtros.rol"  id="rol" class="form-control">
+                                                    <option value="0">Seleccionar Rol</option>
+                                                    <option :key="item.id" v-for="item in init.roles" :value="item.id">{{ item.name }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="" style="visibility: hidden;">Search</label>
+                                                <button @click="getUsers()" class="btn btn-block btn-sm btn-primary form-control" > Buscar </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Unidad</th>
-                        <th>Depto</th>
-                        <th>Rut</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
-                        <th>Rol</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item) in users" :key="item.id">
-                        <td>{{ item.nombres+' '+item.ap_paterno+' '+item.ap_materno }}</td>
-                        <td>{{ item.unidad.nombre }}</td>
-                        <td>{{ item.depto.nombre }}</td>
-                        <td>{{ item.nr_rut }}</td>
-                        <td>{{ item.email }}</td>
-                        <td>{{ item.telefono }}</td>
-                        <td>{{ item.roles[0].name }}</td>
-                        <td>
-                            <button @click="showModal(1,item)" class="btn btn-xs btn-info">Ver</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                    <button @click="showModal(2)" class="btn btn-sm btn-success my-1" style="float:right">
+                        Crear Usuario
+                    </button>
 
-            <div class="nk-block-between-md g-3 mt-3 ">
-                <ul class="pagination justify-content-center justify-content-md-start ml-2">
-                    <li class="page-item" v-if="pagination.current_page > 1">
-                        <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
-                    </li>
-                    <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                        <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
-                    </li>
-                    <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                        <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
-                    </li>
-                </ul>
+                    <table class="table table-sm table-bordered mt-2">
+                        <thead class="bg-primary text-white text-center" style="border: 1px solid white">
+                            
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Unidad</th>
+                                <th>Depto</th>
+                                <th>Rut</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Rol</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item) in users" :key="item.id">
+                                <td>{{ item.nombres+' '+item.ap_paterno+' '+item.ap_materno }}</td>
+                                <td>{{ item.unidad.nombre }}</td>
+                                <td>{{ item.depto.nombre }}</td>
+                                <td>{{ item.nr_rut }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.telefono }}</td>
+                                <td>{{ item.roles[0].name }}</td>
+                                <td>
+                                    <button @click="showModal(1,item)" class="btn btn-xs btn-info">
+                                        <em class="icon ni ni-search"></em>
+                                    </button>
+
+                                    <button @click="setStatus(item.id)" class="btn btn-xs btn-danger mx-1">
+                                        <em class="icon ni ni-trash"></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="nk-block-between-md g-3 mt-3 ">
+                        <ul class="pagination justify-content-center justify-content-md-start ml-2">
+                            <li class="page-item" v-if="pagination.current_page > 1">
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                            </li>
+                            <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                            </li>
+                            <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                </div>
+                <div class="tab-pane" id="tabItem6">
+                    <p>### Por realizar ###</p>
+                </div>
+              
             </div>
 
-        </div>
+        </div>    
     </div>
+
+    
+
+    
     
     
     
@@ -249,10 +282,28 @@ export default {
             }
 },
     methods: {
+        setStatus(id_user)
+        {
+            let me      = this
+            let ruta    = '/user/status'
+
+            axios.post(ruta,{id_user: id_user})
+                .then(response => 
+                {
+                    let resp = response.data;
+
+                    me.getUsers();
+                    me.showToast(resp.color,resp.msg)
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
         getInit()
         {
-            let me = this;
-            let ruta = '/init'
+            let me      = this;
+            let ruta    = '/init'
 
             axios.get(ruta)
                 .then(response => 
@@ -303,13 +354,6 @@ export default {
                     console.log(error)
                 })
         },
-        setOrder(order)
-        {
-            let me = this;
-            me.orderBy = order;
-            me.getUsers()
-        },
-        
         cambiarPagina(page)
         {
             let me = this;
@@ -318,7 +362,7 @@ export default {
         },
         getUsers() {
             let me      = this;
-            let ruta    = '/users?page=' + me.pagination.current_page+'&cant=15';
+            let ruta    = '/users?page=';
 
             axios.post(ruta,{'filtros': me.filtros})
                 .then(response => 

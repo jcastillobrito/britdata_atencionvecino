@@ -29,6 +29,7 @@ Route::group(['middleware' => ['role:ADMIN']], function ()
     Route::post('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.get');
     Route::put('/user', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::post('/user', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+    Route::post('/user/status', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
 
     // Gestion Servicios
     Route::get('/services', [App\Http\Controllers\ServiciosController::class, 'page'])->name('servicios.page');

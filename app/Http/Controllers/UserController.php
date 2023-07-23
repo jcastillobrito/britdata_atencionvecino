@@ -29,6 +29,13 @@ class UserController extends Controller
 {
     protected $Utils;
 
+    public function destroy(Request $request)
+    {
+        $id                 = $request->id_user;
+        $user               = User::where('id','=',$id)->update(['tp_activo'=>0]);
+        return ['error'=>0,'color'=>'success','msg'=>'Usuario inhabilitado correctamente'];
+    }
+
     public function __construct()
     {
         $this->Utils = (new UtilsController());
@@ -117,7 +124,6 @@ class UserController extends Controller
         //obtener el atributo xx del usuario en sesion
         $user           = auth()->user();
         $nr_institucion = $user->nr_institucion;
-        $cant           = $request->cant;
         $filtros        = $request->filtros;
 
         //filtros
@@ -150,6 +156,7 @@ class UserController extends Controller
                         ->with('Unidad')
                         ->with('Depto')
                         ->where('nr_institucion','=',$nr_institucion)
+                        ->where('tp_activo','=',1)
                         ->with('roles');
 
         if($unidad != 0)
@@ -183,7 +190,7 @@ class UserController extends Controller
                 $query->where('id', '=', $rol);
             });
         
-        $users = $users->paginate($cant);
+        $users = $users->paginate(10);
 
         return [
             'pagination' => [

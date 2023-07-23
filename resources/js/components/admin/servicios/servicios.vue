@@ -1,48 +1,78 @@
 <template lang="">
 
-    <table class="table table-sm table-bordered table-responsive">
-        <thead class="bg-primary  text-white text-center"  style="border: 1px solid white">
-            <tr>
-                <th colspan=8>Servicios</th>
-            </tr>
-            <tr>
-                <th>Servicio</th>
-                <th>Descripción</th>
-                <th>Unidad</th>
-                <th>Depto</th>
-                <th>Respuesta Automatica</th>
-                <th>Estado</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in servicios">
-                <td>{{item.nombre}}  
-                    <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios_count === 0, 'bg-success': item.usuarios_count > 0}" title="Cantidad Integrantes">{{item.usuarios_count }}</span> 
-                </td>
-                <td>{{item.descripcion_servicio}} </td>
-                <td>{{item.unidad.nombre}}</td>
-                <td>{{item.depto.nombre}}</td>
-                <td>{{ item.tp_resp_automatica ? 'Si' : 'No' }} </td>
-                <td>{{ item.tp_activo ? 'Habilitado' : 'Desactivado' }}</td>
-                <td>
-                    <button @click="showModal('#modal_generico',item,'modal_responsables')" title="Responsables" class="btn btn-xs btn-primary">
-                        <em class="icon ni ni-users"></em>
+    <div class="card card-bordered card-preview">
+        <div class="card-inner">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5">
+                    <em class="icon ni ni-user"></em><span>Servicios</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tabItem6">
+                    <em class="icon ni ni-growth"></em><span>Métricas</span>
+                    </a>
+                </li>
+                
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabItem5">
+                    <button  class="btn btn-sm btn-success my-1" style="float:right">
+                        Crear Servicios
                     </button>
+                    <table class="table table-sm table-bordered table-responsive">
+                        <thead class="bg-primary  text-white text-center"  style="border: 1px solid white">
+                            <tr>
+                                <th colspan=8>Servicios</th>
+                            </tr>
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Descripción</th>
+                                <th>Unidad</th>
+                                <th>Depto</th>
+                                <th>Respuesta Automatica</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in servicios">
+                                <td>{{item.nombre}}  
+                                    <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios_count === 0, 'bg-success': item.usuarios_count > 0}" title="Cantidad Integrantes">{{item.usuarios_count }}</span> 
+                                </td>
+                                <td>{{item.descripcion_servicio}} </td>
+                                <td>{{item.unidad.nombre}}</td>
+                                <td>{{item.depto.nombre}}</td>
+                                <td>{{ item.tp_resp_automatica ? 'Si' : 'No' }} </td>
+                                <td>{{ item.tp_activo ? 'Habilitado' : 'Desactivado' }}</td>
+                                <td>
+                                    <button @click="showModal('#modal_generico',item,'modal_responsables')" title="Responsables" class="btn btn-xs btn-primary">
+                                        <em class="icon ni ni-users"></em>
+                                    </button>
 
-                    <button title="Editar" class="btn btn-xs btn-warning mx-1">
-                        <em class="icon ni ni-edit-alt"></em>
-                    </button>
+                                    <button title="Editar" class="btn btn-xs btn-warning mx-1">
+                                        <em class="icon ni ni-edit-alt"></em>
+                                    </button>
 
-                    <button title="Desactivar" class="btn btn-xs btn-danger mx-1">
-                        <em class="icon ni ni-trash-alt"></em>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table> 
+                                    <button title="Desactivar" class="btn btn-xs btn-danger mx-1">
+                                        <em class="icon ni ni-trash-alt"></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
 
+            <div class="tab-content">
+                <div class="tab-pane " id="tabItem6">
+                    test 2
+                </div>
+            </div>
 
+        </div>
+    </div>
   
     <div class="modal" tabindex="-1" id="modal_generico">
         <div class="modal-dialog modal-lg">
