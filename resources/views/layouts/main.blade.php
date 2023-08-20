@@ -14,8 +14,6 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-
-
     <style>
         .sin-borde{
             border: none !important;
@@ -27,17 +25,16 @@
     @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css','resources/css/skins/theme-egyptian.css'])
 
 </head>
-<body class="nk-body bg-lighter npc-general has-sidebar" theme="dark">
-    
+<body class="nk-body bg-lighter npc-general has-sidebar ">
     <div class="nk-app-root">
         <!-- main @s -->
         <div class="nk-main ">
             <!-- sidebar @s -->
             @include('layouts.partials.sidebar')
-            
             <!-- sidebar @e -->
             <!-- wrap @s -->
-            <div class="nk-wrap" id="app">
+            
+            <div class="nk-wrap ">
                 <!-- main header @s -->
                 @include('layouts.partials.header')
                 <!-- main header @e -->
@@ -46,14 +43,14 @@
                     <div class="container-fluid">
                         <div class="nk-content-inner">
                             <div class="nk-content-body">
-                               @yield('content')
+                                @yield('content')
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- content @e -->
                 <!-- footer @s -->
-                
+                @include('layouts.partials.footer')
                 <!-- footer @e -->
             </div>
             <!-- wrap @e -->
@@ -62,11 +59,10 @@
     </div>
     <!-- app-root @e -->
     <!-- select region modal -->
-    
+   
     <!-- JavaScript -->
     <script src="{{asset('js/bundle.js?ver=3.1.3')}}"></script>
     <script src="{{asset('js/scripts.js?ver=3.1.3')}}"></script>
-
 
 </body>
 </html>

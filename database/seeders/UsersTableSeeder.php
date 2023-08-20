@@ -26,6 +26,8 @@ class UsersTableSeeder extends Seeder
 
         $users =    User::factory(50)->create();
 
+        
+
         $users->each(function ($user) 
         {
             $roleNames  = ['SUPER-ADMIN', 'ADMIN', 'JEFE UNIDAD', 'JEFE DEPTO', 'JEFE SECCION', 'COLABORADOR', 'CONCEJAL'];

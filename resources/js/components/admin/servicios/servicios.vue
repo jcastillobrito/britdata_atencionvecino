@@ -1,6 +1,7 @@
 <template lang="">
 
-    <div class="card card-bordered card-preview">
+    <div class="row-fluid">
+        <div class="card card-bordered card-preview">
         <div class="card-inner">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -47,17 +48,21 @@
                                 <td>{{ item.tp_resp_automatica ? 'Si' : 'No' }} </td>
                                 <td>{{ item.tp_activo ? 'Habilitado' : 'Desactivado' }}</td>
                                 <td>
-                                    <button @click="showModal('#modal_generico',item,'modal_responsables')" title="Responsables" class="btn btn-xs btn-primary">
-                                        <em class="icon ni ni-users"></em>
-                                    </button>
+                                    <div class="btn-group dropright">
+                                        <button type="button" class="btn btn-primary  dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">Acciones</button>
+                                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                            <em class="icon ni ni-chevron-down"></em>
+                                            <span class="visually-hidden">Toggle Dropright</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <ul class="link-list-plain">
+                                                <li @click="showModal('#modal_generico',item,'modal_responsables')"><a href="#"><em class="icon ni ni-users"></em><span>Responsables</span></a></li>
+                                                <li><a href="#"> <em class="icon ni ni-edit-alt"></em><span>Editar</span></a></li>
+                                                <li><a href="#"><em class="icon ni ni-trash-alt"></em><span>Deshabilitar</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
-                                    <button title="Editar" class="btn btn-xs btn-warning mx-1">
-                                        <em class="icon ni ni-edit-alt"></em>
-                                    </button>
-
-                                    <button title="Desactivar" class="btn btn-xs btn-danger mx-1">
-                                        <em class="icon ni ni-trash-alt"></em>
-                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -74,6 +79,8 @@
         </div>
     </div>
   
+    </div>
+
     <div class="modal" tabindex="-1" id="modal_generico">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

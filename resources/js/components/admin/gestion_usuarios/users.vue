@@ -136,7 +136,7 @@
                                 <th>Email</th>
                                 <th>Telefono</th>
                                 <th>Rol</th>
-                                <th>Opciones</th>
+                                <th style="min-width: 112px;">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>

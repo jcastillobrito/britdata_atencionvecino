@@ -179,6 +179,7 @@ class ServiciosController extends Controller
     {
         $usuario        = $this->Utils->SessionUser();
 
+
         return view('servicios.servicios')
                 ->with('nombre'         ,$usuario['nombre'])
                 ->with('nm_institucion' ,$usuario['nm_institucion'])

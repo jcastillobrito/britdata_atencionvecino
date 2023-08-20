@@ -23,6 +23,7 @@ class HomeController extends Controller
     public function index()
     {
         $role       = Auth::user()->getRoleNames()->first();
+        $user       = Auth::user();
         //Auth::logout();             
         //return redirect()->back();
 
