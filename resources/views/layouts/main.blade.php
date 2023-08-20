@@ -25,16 +25,15 @@
     @vite([ 'resources/js/app.js','resources/css/dashlite.css','resources/css/theme.css','resources/css/skins/theme-egyptian.css'])
 
 </head>
-<body class="nk-body bg-lighter npc-general has-sidebar ">
+<body class="nk-body bg-lighter npc-general has-sidebar" theme="dark">
     <div class="nk-app-root">
         <!-- main @s -->
         <div class="nk-main ">
             <!-- sidebar @s -->
             @include('layouts.partials.sidebar')
             <!-- sidebar @e -->
-            <!-- wrap @s -->
             
-            <div class="nk-wrap ">
+            <div class="nk-wrap" id="app">
                 <!-- main header @s -->
                 @include('layouts.partials.header')
                 <!-- main header @e -->

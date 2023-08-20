@@ -1,8 +1,8 @@
 <template lang="">
 
-    <div class="row-fluid">
-        <div class="card card-bordered card-preview">
+    <div class="card card-bordered " >
         <div class="card-inner">
+
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5">
@@ -14,30 +14,26 @@
                     <em class="icon ni ni-growth"></em><span>Métricas</span>
                     </a>
                 </li>
-                
             </ul>
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="tabItem5">
+            <div class="tab-content" style="width:100%">
+                <div class="tab-pane active" id="tabItem5" >
                     <button  class="btn btn-sm btn-success my-1" style="float:right">
                         Crear Servicios
                     </button>
-                    <table class="table table-sm table-bordered table-responsive">
-                        <thead class="bg-primary  text-white text-center"  style="border: 1px solid white">
-                            <tr>
-                                <th colspan=8>Servicios</th>
-                            </tr>
-                            <tr>
-                                <th>Servicio</th>
-                                <th>Descripción</th>
-                                <th>Unidad</th>
-                                <th>Depto</th>
-                                <th>Respuesta Automatica</th>
-                                <th>Estado</th>
-                                <th>Opciones</th>
+                    <table class="table table-lg table-bordered  table-responsive table-responsive">
+                        <thead class="text-white text-center table-light "  style="border: 1px solid white">
+                            <tr >
+                                <th >Servicio</th>
+                                <th >Descripción</th>
+                                <th >Unidad</th>
+                                <th >Depto</th>
+                                <th >Resp Automatica</th>
+                                <th >Estado</th>
+                                <th >Opciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             <tr v-for="item in servicios">
                                 <td>{{item.nombre}}  
                                     <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios_count === 0, 'bg-success': item.usuarios_count > 0}" title="Cantidad Integrantes">{{item.usuarios_count }}</span> 
@@ -77,7 +73,6 @@
             </div>
 
         </div>
-    </div>
   
     </div>
 
