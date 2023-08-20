@@ -2,74 +2,50 @@
 
     <div class="card card-bordered " >
         <div class="card-inner">
+            
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered  table-responsive ">
+                <thead class="text-white text-center table-light "  style="border: 1px solid white">
+                    <tr >
+                        <th >Servicio</th>
+                        <th >Descripción</th>
+                        <th >Unidad</th>
+                        <th >Depto</th>
+                        <th >Resp Automatica</th>
+                        <th >Estado</th>
+                        <th >Opciones</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr v-for="item in servicios">
+                        <td>{{item.nombre}}  
+                            <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios_count === 0, 'bg-success': item.usuarios_count > 0}" title="Cantidad Integrantes">{{item.usuarios_count }}</span> 
+                        </td>
+                        <td>{{item.descripcion_servicio}} </td>
+                        <td>{{item.unidad.nombre}}</td>
+                        <td>{{item.depto.nombre}}</td>
+                        <td>{{ item.tp_resp_automatica ? 'Si' : 'No' }} </td>
+                        <td>{{ item.tp_activo ? 'Habilitado' : 'Desactivado' }}</td>
+                        <td>
+                            <div class="btn-group dropright">
+                                <button type="button" class="btn btn-primary  dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">Acciones</button>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                    <em class="icon ni ni-chevron-down"></em>
+                                    <span class="visually-hidden">Toggle Dropright</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <ul class="link-list-plain">
+                                        <li @click="showModal('#modal_generico',item,'modal_responsables')"><a href="#"><em class="icon ni ni-users"></em><span>Responsables</span></a></li>
+                                        <li><a href="#"> <em class="icon ni ni-edit-alt"></em><span>Editar</span></a></li>
+                                        <li><a href="#"><em class="icon ni ni-trash-alt"></em><span>Deshabilitar</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
 
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5">
-                    <em class="icon ni ni-user"></em><span>Servicios</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#tabItem6">
-                    <em class="icon ni ni-growth"></em><span>Métricas</span>
-                    </a>
-                </li>
-            </ul>
-
-            <div class="tab-content" style="width:100%">
-                <div class="tab-pane active" id="tabItem5" >
-                    <button  class="btn btn-sm btn-success my-1" style="float:right">
-                        Crear Servicios
-                    </button>
-                    <table class="table table-lg table-bordered  table-responsive table-responsive">
-                        <thead class="text-white text-center table-light "  style="border: 1px solid white">
-                            <tr >
-                                <th >Servicio</th>
-                                <th >Descripción</th>
-                                <th >Unidad</th>
-                                <th >Depto</th>
-                                <th >Resp Automatica</th>
-                                <th >Estado</th>
-                                <th >Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            <tr v-for="item in servicios">
-                                <td>{{item.nombre}}  
-                                    <span class="badge  rounded-pill" :class="{'bg-danger': item.usuarios_count === 0, 'bg-success': item.usuarios_count > 0}" title="Cantidad Integrantes">{{item.usuarios_count }}</span> 
-                                </td>
-                                <td>{{item.descripcion_servicio}} </td>
-                                <td>{{item.unidad.nombre}}</td>
-                                <td>{{item.depto.nombre}}</td>
-                                <td>{{ item.tp_resp_automatica ? 'Si' : 'No' }} </td>
-                                <td>{{ item.tp_activo ? 'Habilitado' : 'Desactivado' }}</td>
-                                <td>
-                                    <div class="btn-group dropright">
-                                        <button type="button" class="btn btn-primary  dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">Acciones</button>
-                                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
-                                            <em class="icon ni ni-chevron-down"></em>
-                                            <span class="visually-hidden">Toggle Dropright</span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <ul class="link-list-plain">
-                                                <li @click="showModal('#modal_generico',item,'modal_responsables')"><a href="#"><em class="icon ni ni-users"></em><span>Responsables</span></a></li>
-                                                <li><a href="#"> <em class="icon ni ni-edit-alt"></em><span>Editar</span></a></li>
-                                                <li><a href="#"><em class="icon ni ni-trash-alt"></em><span>Deshabilitar</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> 
-                </div>
-            </div>
-
-            <div class="tab-content">
-                <div class="tab-pane " id="tabItem6">
-                    test 2
-                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
             </div>
 
         </div>
